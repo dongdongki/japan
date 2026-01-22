@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginVertical="4dp"
+    app:cardBackgroundColor="@color/dark_surface"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation"
+    android:foreground="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- 상단: 체크박스와 발음 버튼 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <ImageButton
+                android:id="@+id/btn_speak"
+                android:layout_width="@dimen/min_touch_target_size"
+                android:layout_height="@dimen/min_touch_target_size"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="단어 발음 듣기"
+                android:src="@drawable/ic_volume_up"
+                android:scaleType="fitCenter"
+                android:padding="8dp"
+                android:layout_marginEnd="4dp"
+                app:tint="@color/white" />
+
+            <CheckBox
+                android:id="@+id/cb_weak_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <!-- 일본어 단어 -->
+        <TextView
+            android:id="@+id/tv_word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp"
+            tools:text="日本語" />
+
+        <!-- 히라가나 -->
+        <TextView
+            android:id="@+id/tv_hiragana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_gray"
+            android:textSize="14sp"
+            android:layout_marginTop="2dp"
+            tools:text="にほんご" />
+
+        <!-- 한국어 뜻 -->
+        <TextView
+            android:id="@+id/tv_meaning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/mint_accent"
+            android:textSize="15sp"
+            tools:text="일본어" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

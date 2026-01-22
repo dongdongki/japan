@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/spacing_medium"
+    tools:context=".ui.WritingPracticeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/spacing_small">
+
+        <Button
+            android:id="@+id/btn_previous"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이전"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/word_to_practice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/writing_word_text_size"
+                    tools:text="日本語" />
+
+                <ImageButton
+                    android:id="@+id/btn_speak_writing"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="단어 발음 듣기"
+                    android:src="@drawable/ic_volume_up"
+                    android:scaleType="fitCenter"
+                    android:padding="8dp"
+                    app:tint="@color/white" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_meaning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/writing_meaning_text_size"
+                tools:text="일본어" />
+
+            <TextView
+                android:id="@+id/tv_hiragana"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/writing_hiragana_text_size"
+                tools:text="にほんご" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_toggle_text"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:text="字"
+            android:textSize="18sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:contentDescription="글자 숨기기/보이기" />
+
+        <Button
+            android:id="@+id/btn_toggle_meaning"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:text="뜻"
+            android:textSize="18sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:contentDescription="뜻 숨기기/보이기" />
+
+        <Button
+            android:id="@+id/btn_next"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="다음"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <com.example.myapplication.ui.WritingView
+        android:id="@+id/writing_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:background="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/spacing_medium">
+
+        <ToggleButton
+            android:id="@+id/toggle_eraser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="Eraser"
+            android:textOff="Pen"/>
+
+        <Button
+            android:id="@+id/clear_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:text="Clear" />
+
+    </LinearLayout>
+
+</LinearLayout>

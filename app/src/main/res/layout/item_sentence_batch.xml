@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_batch"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/dark_surface"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:layout_margin="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_batch_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1회차"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_batch_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10개 문장 · 일일 단어 5개"
+                android:textSize="12sp"
+                android:textColor="@color/light_gray"
+                android:layout_marginTop="2dp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_unknown_words"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="없는단어"
+            android:textSize="12sp"
+            android:minWidth="0dp"
+            android:paddingHorizontal="10dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_delete"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="삭제"
+            android:textSize="12sp"
+            android:minWidth="0dp"
+            android:paddingHorizontal="12dp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

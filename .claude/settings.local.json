@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew assembleDebug:*)",
+      "Bash(./gradlew clean:*)",
+      "Bash(python remove_duplicates.py:*)",
+      "Bash(python categorize_words.py:*)",
+      "Bash(git checkout:*)",
+      "Bash(python fix_verbs.py:*)",
+      "Bash(cat:*)",
+      "Bash(./gradlew build:*)",
+      "Bash(\"C:\\Users\\judek\\AndroidStudioProjects\\MyApplication4\\app\\src\\main\\res\\layout\\activity_main.xml\")",
+      "Bash(python:*)",
+      "Bash(./gradlew compileDebugKotlin:*)",
+      "Bash(\"C:\\Users\\judek\\AndroidStudioProjects\\MyApplication4\\app\\src\\main\\assets\\conjunction.json\")",
+      "Bash(move:*)",
+      "Bash(adb logcat:*)",
+      "Bash(adb install:*)",
+      "Bash(done)",
+      "Bash(dir)",
+      "Bash(ren words.json noun.json)",
+      "Bash(mv:*)",
+      "Bash(dir:*)",
+      "Bash(find:*)",
+      "Bash(./gradlew installDebug:*)",
+      "Bash(fi)",
+      "Bash(if not exist \"c:\\Users\\judek\\AndroidStudioProjects\\MyApplication4\\app\\src\\main\\res\\layout-sw600dp\" mkdir \"c:\\Users\\judek\\AndroidStudioProjects\\MyApplication4\\app\\src\\main\\res\\layout-sw600dp\")",
+      "Bash(nul)",
+      "Bash(gradlew.bat assembleDebug:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

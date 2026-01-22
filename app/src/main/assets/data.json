@@ -1,0 +1,66 @@
+{
+  "hiragana": {
+    "아행": [
+      { "kana": "あ", "kor": "아", "romaji": "a" }, { "kana": "い", "kor": "이", "romaji": "i" }, { "kana": "う", "kor": "우", "romaji": "u" }, { "kana": "え", "kor": "에", "romaji": "e" }, { "kana": "お", "kor": "오", "romaji": "o" }
+    ],
+    "카행": [
+      { "kana": "か", "kor": "카", "romaji": "ka" }, { "kana": "き", "kor": "키", "romaji": "ki" }, { "kana": "く", "kor": "쿠", "romaji": "ku" }, { "kana": "け", "kor": "케", "romaji": "ke" }, { "kana": "こ", "kor": "코", "romaji": "ko" }
+    ],
+    "사행": [
+      { "kana": "さ", "kor": "사", "romaji": "sa" }, { "kana": "し", "kor": "시", "romaji": "shi" }, { "kana": "す", "kor": "스", "romaji": "su" }, { "kana": "せ", "kor": "세", "romaji": "se" }, { "kana": "そ", "kor": "소", "romaji": "so" }
+    ],
+    "타행": [
+      { "kana": "た", "kor": "타", "romaji": "ta" }, { "kana": "ち", "kor": "치", "romaji": "chi" }, { "kana": "つ", "kor": "츠", "romaji": "tsu" }, { "kana": "て", "kor": "테", "romaji": "te" }, { "kana": "と", "kor": "토", "romaji": "to" }
+    ],
+    "나행": [
+      { "kana": "な", "kor": "나", "romaji": "na" }, { "kana": "に", "kor": "니", "romaji": "ni" }, { "kana": "ぬ", "kor": "누", "romaji": "nu" }, { "kana": "ね", "kor": "네", "romaji": "ne" }, { "kana": "の", "kor": "노", "romaji": "no" }
+    ],
+    "하행": [
+      { "kana": "は", "kor": "하", "romaji": "ha" }, { "kana": "ひ", "kor": "히", "romaji": "hi" }, { "kana": "ふ", "kor": "후", "romaji": "fu" }, { "kana": "へ", "kor": "헤", "romaji": "he" }, { "kana": "ほ", "kor": "호", "romaji": "ho" }
+    ],
+    "마행": [
+      { "kana": "ま", "kor": "마", "romaji": "ma" }, { "kana": "み", "kor": "미", "romaji": "mi" }, { "kana": "む", "kor": "무", "romaji": "mu" }, { "kana": "め", "kor": "메", "romaji": "me" }, { "kana": "も", "kor": "모", "romaji": "mo" }
+    ],
+    "야행": [
+      { "kana": "や", "kor": "야", "romaji": "ya" }, { "kana": "ゆ", "kor": "유", "romaji": "yu" }, { "kana": "よ", "kor": "요", "romaji": "yo" }
+    ],
+    "라행": [
+      { "kana": "ら", "kor": "라", "romaji": "ra" }, { "kana": "り", "kor": "리", "romaji": "ri" }, { "kana": "る", "kor": "루", "romaji": "ru" }, { "kana": "れ", "kor": "레", "romaji": "re" }, { "kana": "ろ", "kor": "로", "romaji": "ro" }
+    ],
+    "와행": [
+      { "kana": "わ", "kor": "와", "romaji": "wa" }, { "kana": "を", "kor": "오", "romaji": "wo" }, { "kana": "ん", "kor": "응", "romaji": "n" }
+    ]
+  },
+  "katakana": {
+    "아행": [
+      { "kana": "ア", "kor": "아", "romaji": "a" }, { "kana": "イ", "kor": "이", "romaji": "i" }, { "kana": "ウ", "kor": "우", "romaji": "u" }, { "kana": "エ", "kor": "에", "romaji": "e" }, { "kana": "オ", "kor": "오", "romaji": "o" }
+    ],
+    "카행": [
+      { "kana": "カ", "kor": "카", "romaji": "ka" }, { "kana": "キ", "kor": "키", "romaji": "ki" }, { "kana": "ク", "kor": "쿠", "romaji": "ku" }, { "kana": "ケ", "kor": "케", "romaji": "ke" }, { "kana": "コ", "kor": "코", "romaji": "ko" }
+    ],
+    "사행": [
+      { "kana": "サ", "kor": "사", "romaji": "sa" }, { "kana": "シ", "kor": "시", "romaji": "shi" }, { "kana": "ス", "kor": "스", "romaji": "su" }, { "kana": "セ", "kor": "세", "romaji": "se" }, { "kana": "ソ", "kor": "소", "romaji": "so" }
+    ],
+    "타행": [
+      { "kana": "タ", "kor": "타", "romaji": "ta" }, { "kana": "チ", "kor": "치", "romaji": "chi" }, { "kana": "ツ", "kor": "츠", "romaji": "tsu" }, { "kana": "テ", "kor": "테", "romaji": "te" }, { "kana": "ト", "kor": "토", "romaji": "to" }
+    ],
+    "나행": [
+      { "kana": "ナ", "kor": "나", "romaji": "na" }, { "kana": "ニ", "kor": "니", "romaji": "ni" }, { "kana": "ヌ", "kor": "누", "romaji": "nu" }, { "kana": "ネ", "kor": "네", "romaji": "ne" }, { "kana": "ノ", "kor": "노", "romaji": "no" }
+    ],
+    "하행": [
+      { "kana": "ハ", "kor": "하", "romaji": "ha" }, { "kana": "ヒ", "kor": "히", "romaji": "hi" }, { "kana": "フ", "kor": "후", "romaji": "fu" }, { "kana": "ヘ", "kor": "헤", "romaji": "he" }, { "kana": "ホ", "kor": "호", "romaji": "ho" }
+    ],
+    "마행": [
+      { "kana": "マ", "kor": "마", "romaji": "ma" }, { "kana": "ミ", "kor": "미", "romaji": "mi" }, { "kana": "ム", "kor": "무", "romaji": "mu" }, { "kana": "メ", "kor": "메", "romaji": "me" }, { "kana": "モ", "kor": "모", "romaji": "mo" }
+    ],
+    "야행": [
+      { "kana": "ヤ", "kor": "야", "romaji": "ya" }, { "kana": "ユ", "kor": "유", "romaji": "yu" }, { "kana": "ヨ", "kor": "요", "romaji": "yo" }
+    ],
+    "라행": [
+      { "kana": "ラ", "kor": "라", "romaji": "ra" }, { "kana": "リ", "kor": "리", "romaji": "ri" }, { "kana": "ル", "kor": "루", "romaji": "ru" }, { "kana": "レ", "kor": "레", "romaji": "re" }, { "kana": "ロ", "kor": "로", "romaji": "ro" }
+    ],
+    "와행": [
+      { "kana": "ワ", "kor": "와", "romaji": "wa" }, { "kana": "ヲ", "kor": "오", "romaji": "wo" }, { "kana": "ン", "kor": "응", "romaji": "n" }
+    ]
+  }
+}

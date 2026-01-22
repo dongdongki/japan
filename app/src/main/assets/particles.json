@@ -1,0 +1,86 @@
+[
+  {
+    "kanji": "は",
+    "meaning": "~은/는 (주제 조사)",
+    "hiragana": "は",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "が",
+    "meaning": "~이/가 (주격 조사), 까? (의문)",
+    "hiragana": "が",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "を",
+    "meaning": "~을/를 (목적격 조사)",
+    "hiragana": "を",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "に",
+    "meaning": "~에 (시간, 장소, 방향)",
+    "hiragana": "に",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "で",
+    "meaning": "~에서, ~으로 (장소, 수단)",
+    "hiragana": "で",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "と",
+    "meaning": "~와/과",
+    "hiragana": "と",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "へ",
+    "meaning": "~로/으로 (방향)",
+    "hiragana": "へ",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "から",
+    "meaning": "~에서, ~부터",
+    "hiragana": "から",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "まで",
+    "meaning": "~까지",
+    "hiragana": "まで",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "の",
+    "meaning": "~의 (소유격 조사)",
+    "hiragana": "の",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "も",
+    "meaning": "~도 (첨가/포함)",
+    "hiragana": "も",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "や",
+    "meaning": "~랑, ~이나 (대표적인 것 몇 개만 나열할 때)",
+    "hiragana": "や",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "ね",
+    "meaning": "~네요, ~군요 (동의/확인 - 문장 끝에 붙음)",
+    "hiragana": "ね",
+    "partOfSpeech": "particle"
+  },
+  {
+    "kanji": "よ",
+    "meaning": "~해요, ~요 (강조/알려줌 - 문장 끝에 붙음)",
+    "hiragana": "よ",
+    "partOfSpeech": "particle"
+  }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "kanji": "大きい",
+    "meaning": "크다",
+    "hiragana": "おおきい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "小さい",
+    "meaning": "작다",
+    "hiragana": "ちいさい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "新しい",
+    "meaning": "새롭다",
+    "hiragana": "あたらしい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "古い",
+    "meaning": "오래되다",
+    "hiragana": "ふるい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "美味しい",
+    "meaning": "맛있다",
+    "hiragana": "おいしい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "高い",
+    "meaning": "비싸다, 높다",
+    "hiragana": "たかい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "赤い",
+    "meaning": "빨갛다. 붉다",
+    "hiragana": "あかい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "白い",
+    "meaning": "희다. 하얗다",
+    "hiragana": "しろい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "長い",
+    "meaning": "길다",
+    "hiragana": "ながい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "安い",
+    "meaning": "(값이) 싸다",
+    "hiragana": "やすい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "多い",
+    "meaning": "많다",
+    "hiragana": "おおい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "あたたかい",
+    "meaning": "따뜻하다",
+    "hiragana": "あたたかい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "あまい",
+    "meaning": "달다",
+    "hiragana": "あまい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "いそがしい",
+    "meaning": "바쁘다",
+    "hiragana": "いそがしい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "おいしい",
+    "meaning": "맛있다",
+    "hiragana": "おいしい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "おもい",
+    "meaning": "무겁다",
+    "hiragana": "おもい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "おもしろい",
+    "meaning": "재미있다",
+    "hiragana": "おもしろい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "きたない",
+    "meaning": "더렵다. 지저분하다",
+    "hiragana": "きたない",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "つよい",
+    "meaning": "강하다. 세다",
+    "hiragana": "つよい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "たのしい",
+    "meaning": "즐겁다",
+    "hiragana": "たのしい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "ちかい",
+    "meaning": "가깝다",
+    "hiragana": "ちかい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "つめたい",
+    "meaning": "차갑다",
+    "hiragana": "つめたい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "とおい",
+    "meaning": "멀다",
+    "hiragana": "とおい",
+    "partOfSpeech": "adjective"
+  },
+  {
+    "kanji": "わかい",
+    "meaning": "젊다",
+    "hiragana": "わかい",
+    "partOfSpeech": "adjective"
+  }
+]

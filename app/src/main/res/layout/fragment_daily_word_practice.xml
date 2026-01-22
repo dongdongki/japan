@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.DailyWordPracticeFragment">
+
+    <!-- Top: Word count, weak checkbox, and Toggle buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <!-- Word count on left -->
+        <TextView
+            android:id="@+id/tv_word_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
+
+        <!-- Toggle buttons on right -->
+        <Button
+            android:id="@+id/btn_toggle_text"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="字"
+            android:textSize="12sp"
+            android:paddingHorizontal="12dp"/>
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="0dp"/>
+
+        <Button
+            android:id="@+id/btn_toggle_reading"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="音"
+            android:textSize="12sp"
+            android:paddingHorizontal="12dp"/>
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="0dp"/>
+
+        <Button
+            android:id="@+id/btn_toggle_meaning"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="뜻"
+            android:textSize="12sp"
+            android:paddingHorizontal="12dp"/>
+
+    </LinearLayout>
+
+    <!-- Content area -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Word with TTS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="36sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <ImageButton
+                android:id="@+id/btn_speak"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_volume_up"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="발음 듣기"
+                app:tint="@color/white"
+                android:layout_marginStart="8dp"/>
+
+        </LinearLayout>
+
+        <!-- Reading -->
+        <TextView
+            android:id="@+id/tv_reading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginTop="8dp"
+            android:gravity="center"/>
+
+        <!-- Meaning -->
+        <TextView
+            android:id="@+id/tv_meaning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="16dp"
+            android:gravity="center"/>
+
+        <!-- Example JP -->
+        <TextView
+            android:id="@+id/tv_example_jp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginTop="16dp"
+            android:gravity="center"/>
+
+        <!-- Example KR -->
+        <TextView
+            android:id="@+id/tv_example_kr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/light_gray"
+            android:layout_marginTop="8dp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <!-- Navigation buttons at bottom -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp">
+
+        <!-- Weak word checkbox on left -->
+        <CheckBox
+            android:id="@+id/cb_weak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/weak_word_red"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btn_previous"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:text="이전"
+            android:textSize="14sp"/>
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="0dp"/>
+
+        <Button
+            android:id="@+id/btn_next"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:text="다음"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+    <!-- Hidden views to maintain compatibility -->
+    <com.example.myapplication.ui.WritingView
+        android:id="@+id/writing_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_clear"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"/>
+
+</LinearLayout>

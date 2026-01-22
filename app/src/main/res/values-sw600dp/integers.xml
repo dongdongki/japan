@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tablet: 3 columns for words -->
+    <integer name="word_list_span_count">3</integer>
+    <!-- Tablet: 2 columns for sentences -->
+    <integer name="sentence_list_span_count">2</integer>
+</resources>

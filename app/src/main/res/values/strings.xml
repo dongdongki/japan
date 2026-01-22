@@ -1,0 +1,108 @@
+<resources>
+    <string name="app_name">일본어 학습</string>
+
+    <!-- Home Screen -->
+    <string name="home_title">일본어 학습</string>
+    <string name="home_subtitle">가나와 단어를 마스터하세요</string>
+    <string name="home_btn_kana">가나 학습 시작</string>
+    <string name="home_btn_word">단어 학습 시작</string>
+    <string name="home_btn_settings">설정</string>
+    <string name="home_btn_quit">종료</string>
+
+    <!-- Common Buttons -->
+    <string name="btn_back">뒤로</string>
+    <string name="btn_clear">Clear</string>
+    <string name="btn_prev">◀</string>
+    <string name="btn_next">▶</string>
+    <string name="btn_speak">🔊 발음 듣기</string>
+    <string name="btn_start_quiz">퀴즈 시작</string>
+    <string name="btn_listening_quiz">듣기 퀴즈</string>
+
+    <!-- Settings -->
+    <string name="settings_pen_width">펜 굵기</string>
+    <string name="settings_eraser_size">지우개 크기</string>
+
+    <!-- Kana -->
+    <string name="kana_list_title">가나 목록</string>
+    <string name="kana_list_btn">가나 목록 보기</string>
+
+    <!-- Setup Screen -->
+    <string name="setup_section_script">1. 문자 체계</string>
+    <string name="setup_section_range">2. 학습 범위</string>
+    <string name="setup_hiragana">히라가나</string>
+    <string name="setup_katakana">가타카나</string>
+    <string name="setup_both">동시 (히라가나/가타카나)</string>
+    <string name="setup_random">랜덤 (히라가나 + 가타카나)</string>
+    <string name="setup_all">전체 학습</string>
+    <string name="setup_by_row">행별 선택</string>
+
+    <!-- Word Setup -->
+    <string name="word_setup_title">단어장</string>
+    <string name="word_setup_view_all">단어장 보기</string>
+    <string name="word_setup_weak_words">선택 단어장</string>
+    <string name="word_setup_song">노래 가사 단어장</string>
+
+    <!-- Categories -->
+    <string name="category_title">카테고리 선택</string>
+    <string name="category_word">단어</string>
+    <string name="category_grammar">문법</string>
+    <string name="category_verb">동사</string>
+    <string name="category_particle">조사</string>
+
+    <!-- Quiz Categories -->
+    <string name="quiz_category_title">퀴즈 카테고리 선택</string>
+    <string name="grammar_category_title">문법 카테고리 선택</string>
+
+    <!-- Quiz Modes -->
+    <string name="quiz_mode_word_title">단어 퀴즈 모드 선택</string>
+    <string name="quiz_mode_verb_title">동사 퀴즈 모드</string>
+    <string name="quiz_mode_particle_title">조사 퀴즈 모드</string>
+    <string name="quiz_mode_weak_word_title">약점 단어 퀴즈 모드</string>
+    <string name="quiz_mode_song_title">노래 퀴즈 모드</string>
+
+    <string name="quiz_mode_meaning_to_kanji">뜻 보고 글자 맞추기</string>
+    <string name="quiz_mode_kanji_to_meaning">글자 보고 뜻 맞추기</string>
+    <string name="quiz_mode_meaning_to_verb">뜻 보고 동사 맞추기</string>
+    <string name="quiz_mode_verb_to_meaning">동사 보고 뜻 맞추기</string>
+    <string name="quiz_mode_meaning_to_particle">뜻 보고 조사 맞추기</string>
+    <string name="quiz_mode_particle_to_meaning">조사 보고 뜻 맞추기</string>
+    <string name="quiz_mode_writing_test">쓰기 시험</string>
+    <string name="quiz_mode_multiple_choice">(객관식)</string>
+    <string name="quiz_mode_subjective">(주관식)</string>
+    <string name="quiz_mode_writing_desc">(뜻 보고 손으로 쓰기)</string>
+
+    <!-- Song -->
+    <string name="song_pretender_title">Pretender 가사 단어장</string>
+
+    <!-- Quiz Screen -->
+    <string name="quiz_correct">정답!</string>
+    <string name="quiz_incorrect">오답! 정답: %1$s</string>
+    <string name="quiz_next_problem">다음 문제</string>
+    <string name="quiz_confirm">확인</string>
+    <string name="quiz_finish">종료</string>
+    <string name="quiz_finish_learning">학습 종료</string>
+    <string name="quiz_remaining_info">남은 문제: %1$d | 정답: %2$d / %3$d</string>
+    <string name="quiz_answer_hint">정답을 입력하세요</string>
+
+    <!-- Quiz Result Screen -->
+    <string name="result_title">학습 결과</string>
+    <string name="result_summary">결과: %1$d 문제 중 %2$d 개 정답 (정답률: %3$d%%)</string>
+    <string name="result_wrong_title">틀린 문제</string>
+    <string name="result_all_correct">모든 문제를 맞췄습니다! 🎉</string>
+    <string name="result_table_header_problem">문제</string>
+    <string name="result_table_header_pronunciation">발음</string>
+    <string name="result_table_header_answer">정답</string>
+
+    <!-- Dialog Messages -->
+    <string name="dialog_confirm_quit">퀴즈를 종료하시겠습니까?</string>
+    <string name="dialog_confirm">확인</string>
+    <string name="dialog_cancel">취소</string>
+
+    <!-- Word List Fragment -->
+    <string name="word_list_toggle_meaning_hide">한국어 뜻 숨기기</string>
+    <string name="word_list_toggle_meaning_show">한국어 뜻 보이기</string>
+    <string name="word_list_toggle_meaning_desc_hide">한국어 뜻을 숨깁니다</string>
+    <string name="word_list_toggle_meaning_desc_show">한국어 뜻을 보이게 합니다</string>
+    <string name="word_list_quiz_selected">선택 단어 퀴즈</string>
+    <string name="sentence_list_quiz_selected">선택 문장 퀴즈</string>
+</resources>

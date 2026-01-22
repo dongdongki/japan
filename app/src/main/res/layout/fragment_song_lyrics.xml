@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/dark_background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_medium"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/spacing_large">
+
+        <Button
+            android:id="@+id/btn_back"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="←"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:contentDescription="뒤로 가기" />
+
+        <TextView
+            android:id="@+id/tv_song_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="노래 제목"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginEnd="48dp" />
+
+        <Button
+            android:id="@+id/btn_edit_mode"
+            style="@style/WhiteOutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="편집"
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:contentDescription="타임스탬프 편집" />
+    </LinearLayout>
+
+    <!-- Save button (visible in edit mode) -->
+    <Button
+        android:id="@+id/btn_save"
+        style="@style/WhiteOutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:text="타임스탬프 저장"
+        android:visibility="gone" />
+
+    <!-- Lyrics ScrollView -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/spacing_large">
+
+        <LinearLayout
+            android:id="@+id/lyrics_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+</LinearLayout>
