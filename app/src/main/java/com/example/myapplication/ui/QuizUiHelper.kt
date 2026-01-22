@@ -21,6 +21,11 @@ class QuizUiHelper(
     // Flag to prevent re-generating choices when observer fires
     var isGeneratingChoices = false
 
+    // Choice buttons list for unified handling
+    private val choiceButtons by lazy {
+        listOf(binding.btnChoice1, binding.btnChoice2, binding.btnChoice3, binding.btnChoice4)
+    }
+
     /**
      * 모든 LiveData 옵저버 설정
      */
@@ -152,11 +157,10 @@ class QuizUiHelper(
      * 객관식 버튼에 텍스트 설정
      */
     fun setChoiceButtonTexts(choices: List<String>) {
-        if (choices.size >= 4) {
-            binding.btnChoice1.text = choices[0]
-            binding.btnChoice2.text = choices[1]
-            binding.btnChoice3.text = choices[2]
-            binding.btnChoice4.text = choices[3]
+        if (choices.size >= choiceButtons.size) {
+            choiceButtons.forEachIndexed { index, button ->
+                button.text = choices[index]
+            }
         }
     }
 
@@ -185,10 +189,7 @@ class QuizUiHelper(
         }
 
         // Re-enable multiple choice buttons
-        binding.btnChoice1.isEnabled = true
-        binding.btnChoice2.isEnabled = true
-        binding.btnChoice3.isEnabled = true
-        binding.btnChoice4.isEnabled = true
+        setChoiceButtonsEnabled(true)
 
         // Clear writing view for the new problem
         if (binding.writingPracticeContainer.isVisible) {
@@ -197,13 +198,19 @@ class QuizUiHelper(
     }
 
     /**
-     * 객관식 버튼 비활성화
+     * 객관식 버튼 활성화/비활성화
      */
-    fun disableChoiceButtons() {
-        binding.btnChoice1.isEnabled = false
-        binding.btnChoice2.isEnabled = false
-        binding.btnChoice3.isEnabled = false
-        binding.btnChoice4.isEnabled = false
+    fun setChoiceButtonsEnabled(enabled: Boolean) {
+        choiceButtons.forEach { it.isEnabled = enabled }
+    }
+
+    /**
+     * 객관식 버튼 리스너 설정
+     */
+    fun setChoiceButtonListeners(onSelected: (String) -> Unit) {
+        choiceButtons.forEach { button ->
+            button.setOnClickListener { onSelected(button.text.toString()) }
+        }
     }
 
     /**

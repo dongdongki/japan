@@ -236,10 +236,9 @@ class QuizFragment : Fragment() {
             false
         }
 
-        binding.btnChoice1.setOnClickListener { onMultipleChoiceSelected(binding.btnChoice1.text.toString()) }
-        binding.btnChoice2.setOnClickListener { onMultipleChoiceSelected(binding.btnChoice2.text.toString()) }
-        binding.btnChoice3.setOnClickListener { onMultipleChoiceSelected(binding.btnChoice3.text.toString()) }
-        binding.btnChoice4.setOnClickListener { onMultipleChoiceSelected(binding.btnChoice4.text.toString()) }
+        uiHelper.setChoiceButtonListeners { selectedAnswer ->
+            onMultipleChoiceSelected(selectedAnswer)
+        }
 
         binding.clearButton.setOnClickListener { binding.writingView.clear() }
         binding.toggleEraser.setOnCheckedChangeListener { _, isChecked ->
@@ -248,7 +247,7 @@ class QuizFragment : Fragment() {
     }
 
     private fun onMultipleChoiceSelected(selectedAnswer: String) {
-        uiHelper.disableChoiceButtons()
+        uiHelper.setChoiceButtonsEnabled(false)
 
         val isCorrect = viewModel.checkAnswer(selectedAnswer)
         showPronunciationAfterAnswer()
