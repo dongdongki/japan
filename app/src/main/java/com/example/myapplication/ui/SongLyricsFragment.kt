@@ -8,12 +8,16 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSongLyricsBinding
 import com.example.myapplication.model.Song
 import com.google.gson.GsonBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 @AndroidEntryPoint
@@ -201,44 +205,48 @@ class SongLyricsFragment : Fragment() {
     }
 
     private fun saveTimestamps() {
-        try {
-            val jsonData = lyricsList.map { song ->
-                val data = mutableMapOf<String, String?>()
-                data["time"] = song.time
-                if (song.endTime != null) {
-                    data["endTime"] = song.endTime
+        val jsonData = lyricsList.map { song ->
+            val data = mutableMapOf<String, String?>()
+            data["time"] = song.time
+            if (song.endTime != null) {
+                data["endTime"] = song.endTime
+            }
+            data["kanji"] = song.kanji
+            data["hiragana"] = song.hiragana
+            data["meaning"] = song.meaning
+            data
+        }
+
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        val jsonString = gson.toJson(jsonData)
+        val fileName = "${songDirectory}.json"
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    val file = File(requireContext().filesDir, fileName)
+                    file.writeText(jsonString)
                 }
-                data["kanji"] = song.kanji
-                data["hiragana"] = song.hiragana
-                data["meaning"] = song.meaning
-                data
+
+                viewModel.clearSongCache(songDirectory)
+
+                android.widget.Toast.makeText(
+                    requireContext(),
+                    "타임스탬프가 저장되었습니다",
+                    android.widget.Toast.LENGTH_SHORT
+                ).show()
+
+                if (isEditMode) {
+                    toggleEditMode()
+                }
+            } catch (e: Exception) {
+                android.util.Log.e("SongLyricsFragment", "Failed to save timestamps", e)
+                android.widget.Toast.makeText(
+                    requireContext(),
+                    "저장 실패: ${e.message}",
+                    android.widget.Toast.LENGTH_SHORT
+                ).show()
             }
-
-            val gson = GsonBuilder().setPrettyPrinting().create()
-            val jsonString = gson.toJson(jsonData)
-
-            val fileName = "${songDirectory}.json"
-            val file = File(requireContext().filesDir, fileName)
-            file.writeText(jsonString)
-
-            viewModel.clearSongCache(songDirectory)
-
-            android.widget.Toast.makeText(
-                requireContext(),
-                "타임스탬프가 저장되었습니다",
-                android.widget.Toast.LENGTH_SHORT
-            ).show()
-
-            if (isEditMode) {
-                toggleEditMode()
-            }
-        } catch (e: Exception) {
-            android.util.Log.e("SongLyricsFragment", "Failed to save timestamps", e)
-            android.widget.Toast.makeText(
-                requireContext(),
-                "저장 실패: ${e.message}",
-                android.widget.Toast.LENGTH_SHORT
-            ).show()
         }
     }
 

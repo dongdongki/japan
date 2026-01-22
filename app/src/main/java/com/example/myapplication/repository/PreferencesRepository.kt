@@ -6,6 +6,11 @@ import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -17,6 +22,7 @@ class PreferencesRepository(context: Context) {
         context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
     private val mainHandler = Handler(Looper.getMainLooper())
+    private val repositoryScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     // LiveData for observing weak words changes
     private val _weakWordsLiveData = MutableLiveData<Set<Int>>()
@@ -46,18 +52,20 @@ class PreferencesRepository(context: Context) {
     }
 
     /**
-     * Save weak words
+     * Save weak words (async)
      */
     fun saveWeakWords(wordIds: Set<Int>) {
-        with(sharedPrefs.edit()) {
-            val stringSet = wordIds.map { it.toString() }.toSet()
-            putStringSet(KEY_WEAK_WORDS, stringSet)
-            apply()
-        }
-
-        // Update LiveData on main thread
+        // Update LiveData immediately on main thread for UI responsiveness
         mainHandler.post {
             _weakWordsLiveData.value = wordIds
+        }
+
+        // Perform SharedPreferences write on IO thread
+        repositoryScope.launch {
+            val stringSet = wordIds.map { it.toString() }.toSet()
+            sharedPrefs.edit()
+                .putStringSet(KEY_WEAK_WORDS, stringSet)
+                .apply()
         }
     }
 
@@ -127,12 +135,13 @@ class PreferencesRepository(context: Context) {
     }
 
     /**
-     * Save pen width setting
+     * Save pen width setting (async)
      */
     fun savePenWidth(width: Float) {
-        with(sharedPrefs.edit()) {
-            putFloat(KEY_PEN_WIDTH, width)
-            apply()
+        repositoryScope.launch {
+            sharedPrefs.edit()
+                .putFloat(KEY_PEN_WIDTH, width)
+                .apply()
         }
     }
 
@@ -144,12 +153,13 @@ class PreferencesRepository(context: Context) {
     }
 
     /**
-     * Save eraser width setting
+     * Save eraser width setting (async)
      */
     fun saveEraserWidth(width: Float) {
-        with(sharedPrefs.edit()) {
-            putFloat(KEY_ERASER_WIDTH, width)
-            apply()
+        repositoryScope.launch {
+            sharedPrefs.edit()
+                .putFloat(KEY_ERASER_WIDTH, width)
+                .apply()
         }
     }
 
@@ -161,12 +171,13 @@ class PreferencesRepository(context: Context) {
     }
 
     /**
-     * Save selected kana
+     * Save selected kana (async)
      */
     fun saveSelectedKana(kanaSet: Set<String>) {
-        with(sharedPrefs.edit()) {
-            putStringSet(KEY_SELECTED_KANA, kanaSet)
-            apply()
+        repositoryScope.launch {
+            sharedPrefs.edit()
+                .putStringSet(KEY_SELECTED_KANA, kanaSet)
+                .apply()
         }
     }
 
@@ -178,12 +189,13 @@ class PreferencesRepository(context: Context) {
     }
 
     /**
-     * Save show meaning preference
+     * Save show meaning preference (async)
      */
     fun saveShowMeaning(show: Boolean) {
-        with(sharedPrefs.edit()) {
-            putBoolean(KEY_SHOW_MEANING, show)
-            apply()
+        repositoryScope.launch {
+            sharedPrefs.edit()
+                .putBoolean(KEY_SHOW_MEANING, show)
+                .apply()
         }
     }
 }
