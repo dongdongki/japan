@@ -12,4 +12,8 @@
     <color name="medium_gray">#BDBDBD</color>
     <color name="black">#000000</color>
     <color name="weak_word_red">#FF5252</color>
+
+    <!-- UI Component Colors -->
+    <color name="lyric_highlight_background">#33FFFFFF</color>
+    <color name="writing_stroke_color">@android:color/white</color>
 </resources>
