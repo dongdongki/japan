@@ -607,10 +607,12 @@ class QuizViewModel @Inject constructor(
      */
     fun isKanaSelected(kana: KanaCharacter): Boolean {
         // Use cached set, or load it if null
-        if (cachedSelectedKana == null) {
-            cachedSelectedKana = sharedPrefs.getStringSet("selected_kana", emptySet()) ?: emptySet()
+        val selected = cachedSelectedKana ?: run {
+            val loaded = sharedPrefs.getStringSet("selected_kana", emptySet()) ?: emptySet()
+            cachedSelectedKana = loaded
+            loaded
         }
-        return cachedSelectedKana!!.contains("${kana.kana}_${kana.romaji}")
+        return selected.contains("${kana.kana}_${kana.romaji}")
     }
 
     fun toggleKanaSelection(kana: KanaCharacter) {
