@@ -13,6 +13,7 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentQuizBinding
 import com.example.myapplication.model.DailyWord
 import com.example.myapplication.model.KanaCharacter
+import com.example.myapplication.model.QuizType
 import com.example.myapplication.model.Song
 import com.example.myapplication.model.Word
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -58,16 +59,16 @@ class QuizFragment : Fragment() {
     }
 
     private fun displayProblem(problem: Any) {
-        when (viewModel.quizType.value) {
-            "kana" -> displayKanaProblem(problem as KanaCharacter)
-            "word" -> displayWordProblem(problem as Word)
-            "song" -> displaySongProblem(problem as Song)
-            "sentence", "weak_sentences" -> displaySentenceProblem(problem as com.example.myapplication.model.Sentence)
-            "weak_words",
-            "verbs", "particles", "adjectives", "adverbs", "conjunctions",
-            "noun", "verb", "particle", "adjective", "adverb", "conjunction" -> displayWordTypeProblem(problem as Word)
-            "daily_word" -> displayDailyWordProblem(problem as DailyWord)
-            "daily_word_listening" -> displayDailyWordListeningProblem(problem as DailyWord)
+        when (viewModel.quizTypeEnum) {
+            QuizType.KANA -> displayKanaProblem(problem as KanaCharacter)
+            QuizType.WORD -> displayWordProblem(problem as Word)
+            QuizType.SONG -> displaySongProblem(problem as Song)
+            QuizType.SENTENCE, QuizType.WEAK_SENTENCES -> displaySentenceProblem(problem as com.example.myapplication.model.Sentence)
+            QuizType.WEAK_WORDS,
+            QuizType.NOUN, QuizType.VERB, QuizType.PARTICLE, QuizType.ADJECTIVE, QuizType.ADVERB, QuizType.CONJUNCTION -> displayWordTypeProblem(problem as Word)
+            QuizType.DAILY_WORD -> displayDailyWordProblem(problem as DailyWord)
+            QuizType.DAILY_WORD_LISTENING -> displayDailyWordListeningProblem(problem as DailyWord)
+            null -> { /* No quiz type set */ }
         }
     }
 
@@ -275,8 +276,8 @@ class QuizFragment : Fragment() {
         showPronunciationAfterAnswer()
 
         if (isCorrect) {
-            if (viewModel.quizType.value == "daily_word" ||
-                viewModel.quizType.value == "daily_word_listening" ||
+            if (viewModel.quizTypeEnum == QuizType.DAILY_WORD ||
+                viewModel.quizTypeEnum == QuizType.DAILY_WORD_LISTENING ||
                 viewModel.isWeakWordsQuiz.value == true) {
                 binding.tvResult.text = getString(R.string.quiz_correct)
                 binding.tvResult.setTextColor(resources.getColor(android.R.color.white, null))
@@ -293,8 +294,8 @@ class QuizFragment : Fragment() {
 
     private fun showPronunciationAfterAnswer() {
         val problem = viewModel.currentProblem.value ?: return
-        when (viewModel.quizType.value) {
-            "word" -> {
+        when (viewModel.quizTypeEnum) {
+            QuizType.WORD -> {
                 val word = problem as Word
                 val isWeakWordsQuiz = viewModel.isWeakWordsQuiz.value ?: false
                 if (isWeakWordsQuiz && binding.tvHint.visibility != View.VISIBLE) {
@@ -302,14 +303,15 @@ class QuizFragment : Fragment() {
                     binding.tvHint.visibility = View.VISIBLE
                 }
             }
-            "daily_word", "daily_word_listening" -> {
+            QuizType.DAILY_WORD, QuizType.DAILY_WORD_LISTENING -> {
                 val dailyWord = problem as DailyWord
                 binding.tvHint.text = dailyWord.reading
                 binding.tvHint.visibility = View.VISIBLE
-                if (viewModel.quizType.value == "daily_word_listening") {
+                if (viewModel.quizTypeEnum == QuizType.DAILY_WORD_LISTENING) {
                     binding.tvProblem.text = dailyWord.word
                 }
             }
+            else -> { /* No special handling needed */ }
         }
     }
 
@@ -336,9 +338,9 @@ class QuizFragment : Fragment() {
     }
 
     private fun getCorrectAnswerText(problem: Any): String {
-        return when (viewModel.quizType.value) {
-            "kana" -> (problem as KanaCharacter).kor
-            "word" -> {
+        return when (viewModel.quizTypeEnum) {
+            QuizType.KANA -> (problem as KanaCharacter).kor
+            QuizType.WORD -> {
                 val word = problem as Word
                 if (viewModel.quizMode.value == "reverse") {
                     "${word.kanji} [${word.hiragana}]"
@@ -346,7 +348,7 @@ class QuizFragment : Fragment() {
                     "${word.meaning} [${word.hiragana}]"
                 }
             }
-            "song" -> {
+            QuizType.SONG -> {
                 val song = problem as Song
                 if (viewModel.songViewModel.quizMode.value == "reverse") {
                     "${song.kanji} [${song.hiragana}]"
@@ -354,7 +356,7 @@ class QuizFragment : Fragment() {
                     "${song.meaning} [${song.hiragana}]"
                 }
             }
-            "sentence", "weak_sentences" -> {
+            QuizType.SENTENCE, QuizType.WEAK_SENTENCES -> {
                 val sentence = problem as com.example.myapplication.model.Sentence
                 if (viewModel.sentenceViewModel.quizMode.value == "reverse") {
                     "${sentence.kanji} [${sentence.hiragana}]"
@@ -362,9 +364,8 @@ class QuizFragment : Fragment() {
                     "${sentence.meaning} [${sentence.hiragana}]"
                 }
             }
-            "weak_words",
-            "verbs", "particles", "adjectives", "adverbs", "conjunctions",
-            "noun", "verb", "particle", "adjective", "adverb", "conjunction" -> {
+            QuizType.WEAK_WORDS,
+            QuizType.NOUN, QuizType.VERB, QuizType.PARTICLE, QuizType.ADJECTIVE, QuizType.ADVERB, QuizType.CONJUNCTION -> {
                 val word = problem as Word
                 val mode = viewModel.wordViewModel.quizMode.value ?: viewModel.quizMode.value
                 if (mode == "reverse") {
@@ -373,17 +374,17 @@ class QuizFragment : Fragment() {
                     "${word.meaning} [${word.hiragana}]"
                 }
             }
-            "daily_word", "daily_word_listening" -> {
+            QuizType.DAILY_WORD, QuizType.DAILY_WORD_LISTENING -> {
                 val dailyWord = problem as DailyWord
                 "${dailyWord.meaning} [${dailyWord.reading}]"
             }
-            else -> ""
+            null -> ""
         }
     }
 
     private fun showPronunciationAfterIncorrect(problem: Any) {
-        when (viewModel.quizType.value) {
-            "word" -> {
+        when (viewModel.quizTypeEnum) {
+            QuizType.WORD -> {
                 val word = problem as Word
                 val isWeakWordsQuiz = viewModel.isWeakWordsQuiz.value ?: false
                 if (isWeakWordsQuiz) {
@@ -391,14 +392,15 @@ class QuizFragment : Fragment() {
                     binding.tvHint.visibility = View.VISIBLE
                 }
             }
-            "daily_word", "daily_word_listening" -> {
+            QuizType.DAILY_WORD, QuizType.DAILY_WORD_LISTENING -> {
                 val dailyWord = problem as DailyWord
                 binding.tvHint.text = dailyWord.reading
                 binding.tvHint.visibility = View.VISIBLE
-                if (viewModel.quizType.value == "daily_word_listening") {
+                if (viewModel.quizTypeEnum == QuizType.DAILY_WORD_LISTENING) {
                     binding.tvProblem.text = dailyWord.word
                 }
             }
+            else -> { /* No special handling needed */ }
         }
     }
 
