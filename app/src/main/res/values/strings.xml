@@ -98,6 +98,15 @@
     <string name="dialog_confirm">확인</string>
     <string name="dialog_cancel">취소</string>
 
+    <!-- Daily Word -->
+    <string name="daily_word_day_title">%1$d일차\n(%2$d단어)</string>
+    <string name="daily_word_total_info">총 %1$d개 단어 / %2$d일차</string>
+    <string name="daily_word_count">총 %1$d개</string>
+
+    <!-- Edit Mode -->
+    <string name="btn_edit">편집</string>
+    <string name="btn_close">닫기</string>
+
     <!-- Word List Fragment -->
     <string name="word_list_toggle_meaning_hide">한국어 뜻 숨기기</string>
     <string name="word_list_toggle_meaning_show">한국어 뜻 보이기</string>
