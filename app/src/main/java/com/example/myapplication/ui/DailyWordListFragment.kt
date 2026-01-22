@@ -1,6 +1,5 @@
 package com.example.myapplication.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,13 +17,15 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDailyWordListBinding
 import com.example.myapplication.model.DailyWord
 import com.example.myapplication.repository.DailyWordRepository
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DailyWordListFragment : Fragment() {
 
     private var _binding: FragmentDailyWordListBinding? = null
     private val binding get() = _binding!!
     private lateinit var repository: DailyWordRepository
-    private val weakWords = mutableSetOf<Int>()
+    private val viewModel: QuizViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +40,6 @@ class DailyWordListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         repository = DailyWordRepository(requireContext())
-        loadWeakWords()
 
         val day = arguments?.getInt("day") ?: 1
         val words = repository.getWordsForDay(day)
@@ -61,25 +62,12 @@ class DailyWordListFragment : Fragment() {
             },
             onWeakCheckChanged = { wordId, isChecked ->
                 if (isChecked) {
-                    weakWords.add(wordId)
+                    viewModel.addWeakDailyWord(wordId)
                 } else {
-                    weakWords.remove(wordId)
+                    viewModel.removeWeakDailyWord(wordId)
                 }
-                saveWeakWords()
             }
         )
-    }
-
-    private fun loadWeakWords() {
-        val prefs = requireContext().getSharedPreferences(DailyWordDaySelectionFragment.PREFS_NAME, Context.MODE_PRIVATE)
-        val savedWeakWords = prefs.getStringSet(DailyWordDaySelectionFragment.KEY_WEAK_WORDS, emptySet()) ?: emptySet()
-        weakWords.clear()
-        weakWords.addAll(savedWeakWords.map { it.toInt() })
-    }
-
-    private fun saveWeakWords() {
-        val prefs = requireContext().getSharedPreferences(DailyWordDaySelectionFragment.PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putStringSet(DailyWordDaySelectionFragment.KEY_WEAK_WORDS, weakWords.map { it.toString() }.toSet()).apply()
     }
 
     private fun speak(text: String) {
@@ -121,7 +109,7 @@ class DailyWordListFragment : Fragment() {
             holder.tvMeaning.text = word.meaning
 
             holder.cbWeak.setOnCheckedChangeListener(null)
-            holder.cbWeak.isChecked = weakWords.contains(word.id)
+            holder.cbWeak.isChecked = viewModel.isWeakDailyWord(word.id)
             holder.cbWeak.setOnCheckedChangeListener { _, isChecked ->
                 onWeakCheckChanged(word.id, isChecked)
             }
