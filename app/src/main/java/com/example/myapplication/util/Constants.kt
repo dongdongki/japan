@@ -9,4 +9,11 @@ object Constants {
      * to avoid conflicts with Word IDs
      */
     const val SONG_ID_OFFSET = 10000
+
+    // Writing View defaults
+    const val DEFAULT_PEN_WIDTH = 12f
+    const val DEFAULT_ERASER_WIDTH = 40f
+
+    // Song defaults
+    const val DEFAULT_SONG_DIRECTORY = "pretender"
 }

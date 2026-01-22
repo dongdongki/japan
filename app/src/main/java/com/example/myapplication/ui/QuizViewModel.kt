@@ -18,6 +18,7 @@ import com.example.myapplication.repository.KanaRepository
 import com.example.myapplication.repository.PreferencesRepository
 import com.example.myapplication.repository.DailyWordRepository
 import com.example.myapplication.model.DailyWord
+import com.example.myapplication.util.Constants
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,8 +44,8 @@ class QuizViewModel @Inject constructor(
     val weakSentences = MutableLiveData<Set<Int>>(emptySet())
     val weakDailyWords = MutableLiveData<Set<Int>>(emptySet())
     val showMeaning = MutableLiveData(true)
-    val penWidth = MutableLiveData(12f)
-    val eraserWidth = MutableLiveData(40f)
+    val penWidth = MutableLiveData(Constants.DEFAULT_PEN_WIDTH)
+    val eraserWidth = MutableLiveData(Constants.DEFAULT_ERASER_WIDTH)
 
     // Cached SharedPreferences instance to avoid repeated getSharedPreferences calls
     private val sharedPrefs by lazy {
@@ -112,7 +113,7 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun loadPenWidth() {
-        penWidth.value = sharedPrefs.getFloat("pen_width", 12f)
+        penWidth.value = sharedPrefs.getFloat("pen_width", Constants.DEFAULT_PEN_WIDTH)
     }
 
     fun savePenWidth(width: Float) {
@@ -121,7 +122,7 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun loadEraserWidth() {
-        eraserWidth.value = sharedPrefs.getFloat("eraser_width", 40f)
+        eraserWidth.value = sharedPrefs.getFloat("eraser_width", Constants.DEFAULT_ERASER_WIDTH)
     }
 
     fun saveEraserWidth(width: Float) {
