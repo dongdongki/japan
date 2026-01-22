@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDailyWordDaySelectionBinding
 import com.example.myapplication.repository.DailyWordRepository
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DailyWordDaySelectionFragment : Fragment() {
 
     private var _binding: FragmentDailyWordDaySelectionBinding? = null
@@ -85,13 +87,12 @@ class DailyWordDaySelectionFragment : Fragment() {
         }
 
         binding.btnWeakWordQuiz.setOnClickListener {
-            val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            val weakWords = prefs.getStringSet(KEY_WEAK_WORDS, emptySet()) ?: emptySet()
-            if (weakWords.isEmpty()) {
+            val weakWordIds = viewModel.weakDailyWords.value.orEmpty()
+            if (weakWordIds.isEmpty()) {
                 Toast.makeText(context, "취약 단어를 먼저 체크해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            showWeakQuizTypeDialog(weakWords.map { it.toInt() }.toSet())
+            showWeakQuizTypeDialog(weakWordIds)
         }
 
         binding.btnWeakWordList.setOnClickListener {
