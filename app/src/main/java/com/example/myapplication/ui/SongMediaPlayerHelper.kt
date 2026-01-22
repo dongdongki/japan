@@ -86,8 +86,9 @@ class SongMediaPlayerHelper(
         }
 
         try {
-            // 기존 핸들러 취소 (중복 실행 방지)
+            // 기존 핸들러 및 리스너 정리 (중복 실행 방지, 메모리 누수 방지)
             stopPlaybackRunnable?.let { playbackHandler?.removeCallbacks(it) }
+            mediaPlayer?.setOnSeekCompleteListener(null)
 
             val startTimeInSeconds = parseTimestamp(startTimestamp)
             val startTimeInMillis = (startTimeInSeconds * 1000).toInt()
@@ -186,17 +187,25 @@ class SongMediaPlayerHelper(
      * 리소스 해제
      */
     fun release() {
+        // 모든 콜백 정리
         stopPlaybackRunnable?.let { playbackHandler?.removeCallbacks(it) }
+        playbackHandler?.removeCallbacksAndMessages(null)
         playbackHandler = null
         stopPlaybackRunnable = null
 
+        // 모든 리스너 해제 후 MediaPlayer 릴리즈
         mediaPlayer?.apply {
+            setOnSeekCompleteListener(null)
+            setOnCompletionListener(null)
+            setOnErrorListener(null)
+            setOnPreparedListener(null)
             if (isPlaying) {
                 stop()
             }
             release()
         }
         mediaPlayer = null
+        currentLyricIndex = -1
     }
 
     /**
