@@ -16,7 +16,6 @@ class SentenceQuizViewModel(
 
     // Sentence quiz settings
     val quizMode = MutableLiveData("meaning")
-    val isWeakSentencesQuiz = MutableLiveData(false)
     val isMultipleChoice = MutableLiveData(false)
     val multipleChoices = MutableLiveData<List<String>>(emptyList())
 

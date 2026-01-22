@@ -320,31 +320,6 @@ class SentenceRepository @Inject constructor(
     }
 
     /**
-     * ID 범위로 문장 검색 (하위 호환성 - 더 이상 사용하지 않음)
-     */
-    @Deprecated("Use getSentencesByBatchId instead")
-    fun getSentencesByIdRange(startId: Int, endId: Int): List<Sentence> {
-        android.util.Log.w("SentenceRepository", "Deprecated: getSentencesByIdRange called")
-        return getSentences().filter { it.id in startId..endId }
-    }
-
-    /**
-     * ID 범위로 문장 삭제 (하위 호환성 - 더 이상 사용하지 않음)
-     */
-    @Deprecated("Use deleteBatch instead")
-    fun deleteSentencesByIdRange(startId: Int, endId: Int) {
-        android.util.Log.w("SentenceRepository", "Deprecated: deleteSentencesByIdRange called")
-    }
-
-    /**
-     * 하위 호환성을 위한 메서드 - 더 이상 사용하지 않음
-     */
-    @Deprecated("Use saveBatch instead")
-    fun saveGeneratedSentences(sentences: List<Sentence>) {
-        android.util.Log.w("SentenceRepository", "Deprecated: saveGeneratedSentences called")
-    }
-
-    /**
      * 모든 문장 삭제
      */
     fun clearSentences() {
