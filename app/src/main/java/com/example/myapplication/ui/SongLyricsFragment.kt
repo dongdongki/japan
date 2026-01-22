@@ -137,7 +137,7 @@ class SongLyricsFragment : Fragment() {
         }
 
         binding.btnSave.visibility = if (isEditMode) View.VISIBLE else View.GONE
-        binding.btnEditMode.text = if (isEditMode) "닫기" else "편집"
+        binding.btnEditMode.text = getString(if (isEditMode) R.string.btn_close else R.string.btn_edit)
     }
 
     private fun adjustTimestamp(index: Int, adjustment: Float, isStart: Boolean) {

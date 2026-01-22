@@ -51,7 +51,7 @@ class DailyWordDaySelectionFragment : Fragment() {
         val totalDays = repository.getTotalDays()
         val totalWords = repository.getAllWords().size
 
-        binding.tvTotalInfo.text = "총 ${totalWords}개 단어 / ${totalDays}일차"
+        binding.tvTotalInfo.text = getString(R.string.daily_word_total_info, totalWords, totalDays)
 
         // Use 2 columns for phones, 4 for tablets (sw600dp)
         val spanCount = if (resources.configuration.smallestScreenWidthDp >= 600) 4 else 2

@@ -54,7 +54,7 @@ class WeakDailyWordListFragment : Fragment() {
         val weakWordIds = viewModel.weakDailyWords.value.orEmpty()
         val weakWords = allWords.filter { it.id in weakWordIds }
 
-        binding.tvCount.text = "총 ${weakWords.size}개"
+        binding.tvCount.text = getString(R.string.daily_word_count, weakWords.size)
 
         // Use 2 columns for phones, 5 for tablets (sw600dp)
         val spanCount = if (resources.configuration.smallestScreenWidthDp >= 600) 5 else 2
@@ -82,7 +82,7 @@ class WeakDailyWordListFragment : Fragment() {
         val allWords = repository.getAllWords()
         val weakWordIds = viewModel.weakDailyWords.value.orEmpty()
         val weakWords = allWords.filter { it.id in weakWordIds }
-        binding.tvCount.text = "총 ${weakWords.size}개"
+        binding.tvCount.text = getString(R.string.daily_word_count, weakWords.size)
 
         val spanCount = if (resources.configuration.smallestScreenWidthDp >= 600) 5 else 2
         binding.recyclerView.layoutManager = GridLayoutManager(context, spanCount)

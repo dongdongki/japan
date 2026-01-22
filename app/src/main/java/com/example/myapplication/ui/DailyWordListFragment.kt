@@ -44,7 +44,7 @@ class DailyWordListFragment : Fragment() {
         val day = arguments?.getInt("day") ?: 1
         val words = repository.getWordsForDay(day)
 
-        binding.tvDayTitle.text = "${day}일차\n(${words.size}단어)"
+        binding.tvDayTitle.text = getString(R.string.daily_word_day_title, day, words.size)
 
         // Use 2 columns for phones, 5 for tablets (sw600dp)
         val spanCount = if (resources.configuration.smallestScreenWidthDp >= 600) 5 else 2
