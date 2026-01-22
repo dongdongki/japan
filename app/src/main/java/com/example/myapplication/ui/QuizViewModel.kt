@@ -18,6 +18,7 @@ import com.example.myapplication.repository.KanaRepository
 import com.example.myapplication.repository.PreferencesRepository
 import com.example.myapplication.repository.DailyWordRepository
 import com.example.myapplication.model.DailyWord
+import com.example.myapplication.model.QuizType
 import com.example.myapplication.util.Constants
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -65,7 +66,27 @@ class QuizViewModel @Inject constructor(
     val rangeType = MutableLiveData("all")
     val selectedRows = MutableLiveData<List<String>>(emptyList())
     val quizMode = MutableLiveData("reading")
-    val quizType = MutableLiveData<String>()
+    private val _quizType = MutableLiveData<QuizType>()
+
+    /**
+     * Quiz type as String for backward compatibility with existing UI code.
+     * This will be removed after Issues #29-#32 migrate all usages to QuizType enum.
+     */
+    val quizType: MutableLiveData<String> = object : MutableLiveData<String>() {
+        override fun getValue(): String? = _quizType.value?.value
+        override fun setValue(value: String?) {
+            _quizType.value = QuizType.fromString(value)
+        }
+        override fun postValue(value: String?) {
+            _quizType.postValue(QuizType.fromString(value))
+        }
+    }
+
+    /**
+     * Internal quiz type enum for type-safe operations within ViewModel.
+     */
+    val quizTypeEnum: QuizType?
+        get() = _quizType.value
     var currentSongDirectory: String = "pretender"  // Track current song directory for quiz/writing
     private var quizList: List<Any> = emptyList()
     private var currentQuizList: MutableList<Any> = mutableListOf()
@@ -279,12 +300,12 @@ class QuizViewModel @Inject constructor(
         android.util.Log.d("QuizViewModel", "========================================")
         android.util.Log.d("QuizViewModel", "startKanaQuiz called")
 
-        quizType.value = "kana"
+        _quizType.value = QuizType.KANA
         quizMode.value = "reading"
         isMultipleChoice.value = false  // Kana quiz is NEVER multiple choice
 
         android.util.Log.d("QuizViewModel", "Kana quiz settings:")
-        android.util.Log.d("QuizViewModel", "  quizType.value = ${quizType.value}")
+        android.util.Log.d("QuizViewModel", "  quizType.value = ${_quizType.value?.value}")
         android.util.Log.d("QuizViewModel", "  quizMode.value = ${quizMode.value}")
         android.util.Log.d("QuizViewModel", "  isMultipleChoice.value = ${isMultipleChoice.value}")
 
@@ -317,7 +338,7 @@ class QuizViewModel @Inject constructor(
         wordViewModel.isMultipleChoice.value = isMultiple
 
         // Get current part of speech from quizType if available
-        val currentPartOfSpeech = quizType.value
+        val currentQuizType = _quizType.value
 
         val list = if (onlyWeakWords) {
             // CRITICAL: Use getAllWords() not wordData (which only contains nouns)
@@ -325,9 +346,13 @@ class QuizViewModel @Inject constructor(
             wordRepository.getAllWords().filter { isWeakWord(it) }
         } else {
             // Use the part of speech specific list if quizType is set
-            when (currentPartOfSpeech) {
-                "noun", "verb", "particle", "adjective", "adverb", "conjunction" ->
-                    getWordListForPartOfSpeech(currentPartOfSpeech)
+            when (currentQuizType) {
+                QuizType.NOUN -> getWordListForPartOfSpeech("noun")
+                QuizType.VERB -> getWordListForPartOfSpeech("verb")
+                QuizType.PARTICLE -> getWordListForPartOfSpeech("particle")
+                QuizType.ADJECTIVE -> getWordListForPartOfSpeech("adjective")
+                QuizType.ADVERB -> getWordListForPartOfSpeech("adverb")
+                QuizType.CONJUNCTION -> getWordListForPartOfSpeech("conjunction")
                 else -> wordRepository.getAllWords() // Use all words for general quiz
             }
         }
@@ -336,12 +361,12 @@ class QuizViewModel @Inject constructor(
         wordViewModel.quizList = list
         android.util.Log.d("QuizViewModel", "Set wordViewModel.quizList with ${list.size} words")
 
-        // Keep quizType as "word" for compatibility, or use the specific partOfSpeech
-        if (quizType.value !in listOf("noun", "verb", "particle", "adjective", "adverb", "conjunction")) {
-            quizType.value = "word"
+        // Keep quizType as WORD for compatibility, or use the specific partOfSpeech
+        if (_quizType.value !in listOf(QuizType.NOUN, QuizType.VERB, QuizType.PARTICLE, QuizType.ADJECTIVE, QuizType.ADVERB, QuizType.CONJUNCTION)) {
+            _quizType.value = QuizType.WORD
         }
 
-        android.util.Log.d("QuizViewModel", "startWordQuiz: partOfSpeech=$currentPartOfSpeech, listSize=${list.size}, isMultiple=$isMultiple")
+        android.util.Log.d("QuizViewModel", "startWordQuiz: quizType=$currentQuizType, listSize=${list.size}, isMultiple=$isMultiple")
         startQuizInternal(list)
     }
 
@@ -358,7 +383,7 @@ class QuizViewModel @Inject constructor(
     fun nextProblem() {
         if (currentQuizList.isEmpty()) {
             // For daily_word and daily_word_listening quiz, don't cycle - end after one round
-            if (quizType.value == "daily_word" || quizType.value == "daily_word_listening") {
+            if (_quizType.value == QuizType.DAILY_WORD || _quizType.value == QuizType.DAILY_WORD_LISTENING) {
                 currentProblem.value = null
                 remainingProblems.value = 0
                 return
@@ -380,10 +405,10 @@ class QuizViewModel @Inject constructor(
 
     fun checkAnswer(userAnswer: String): Boolean {
         val problem = currentProblem.value ?: return false
-        val correctAnswerSource = when (quizType.value) {
-            "kana" -> (problem as? KanaCharacter)?.kor
-            "word" -> (problem as? Word)?.meaning
-            "song" -> {
+        val correctAnswerSource = when (_quizType.value) {
+            QuizType.KANA -> (problem as? KanaCharacter)?.kor
+            QuizType.WORD -> (problem as? Word)?.meaning
+            QuizType.SONG -> {
                 val song = problem as? Song
                 when (quizMode.value) {
                     "meaning" -> song?.meaning
@@ -391,7 +416,7 @@ class QuizViewModel @Inject constructor(
                     else -> song?.meaning
                 }
             }
-            "sentence", "weak_sentences" -> {
+            QuizType.SENTENCE, QuizType.WEAK_SENTENCES -> {
                 val sentence = problem as? Sentence
                 when (quizMode.value) {
                     "meaning" -> sentence?.meaning
@@ -399,9 +424,8 @@ class QuizViewModel @Inject constructor(
                     else -> sentence?.meaning
                 }
             }
-            "weak_words",
-            "verbs", "particles", "adjectives", "adverbs", "conjunctions",
-            "noun", "verb", "particle", "adjective", "adverb", "conjunction" -> {
+            QuizType.WEAK_WORDS,
+            QuizType.NOUN, QuizType.VERB, QuizType.PARTICLE, QuizType.ADJECTIVE, QuizType.ADVERB, QuizType.CONJUNCTION -> {
                 val word = problem as? Word
                 when (wordViewModel.quizMode.value ?: quizMode.value) {
                     "reverse" -> word?.kanji
@@ -409,7 +433,7 @@ class QuizViewModel @Inject constructor(
                     else -> word?.meaning
                 }
             }
-            "daily_word", "daily_word_listening" -> (problem as? DailyWord)?.meaning
+            QuizType.DAILY_WORD, QuizType.DAILY_WORD_LISTENING -> (problem as? DailyWord)?.meaning
             else -> null
         }
 
@@ -637,13 +661,20 @@ class QuizViewModel @Inject constructor(
     }
 
     // Quiz type methods
+    fun setQuizType(type: QuizType) {
+        _quizType.value = type
+    }
+
+    /**
+     * Set quiz type from string (for backward compatibility)
+     */
     fun setQuizType(type: String) {
-        quizType.value = type
+        _quizType.value = QuizType.fromString(type)
     }
 
     // Start quiz methods
     fun startSongQuiz(mode: String, isMultiple: Boolean = true) {
-        quizType.value = "song"
+        _quizType.value = QuizType.SONG
         quizMode.value = mode
         isMultipleChoice.value = isMultiple
         songViewModel.quizMode.value = mode
@@ -659,7 +690,7 @@ class QuizViewModel @Inject constructor(
     }
 
     fun startSentenceQuiz(mode: String, isMultiple: Boolean = true, useWeakSentences: Boolean = false) {
-        quizType.value = if (useWeakSentences) "weak_sentences" else "sentence"
+        _quizType.value = if (useWeakSentences) QuizType.WEAK_SENTENCES else QuizType.SENTENCE
         quizMode.value = mode
         isMultipleChoice.value = isMultiple
         sentenceViewModel.quizMode.value = mode
@@ -684,15 +715,15 @@ class QuizViewModel @Inject constructor(
         android.util.Log.d("QuizViewModel", "========================================")
         android.util.Log.d("QuizViewModel", "startWordQuizByType called: type=$type, mode=$mode, isMultiple=$isMultiple")
 
-        quizType.value = type
+        val quizTypeEnum = QuizType.fromString(type) ?: QuizType.WORD
+        _quizType.value = quizTypeEnum
         quizMode.value = mode
         isMultipleChoice.value = isMultiple
         wordViewModel.quizMode.value = mode
         wordViewModel.isMultipleChoice.value = isMultiple
-        setQuizType(type)
 
         android.util.Log.d("QuizViewModel", "After setting values:")
-        android.util.Log.d("QuizViewModel", "  quizType.value = ${quizType.value}")
+        android.util.Log.d("QuizViewModel", "  quizType.value = ${_quizType.value?.value}")
         android.util.Log.d("QuizViewModel", "  quizMode.value = ${quizMode.value}")
         android.util.Log.d("QuizViewModel", "  isMultipleChoice.value = ${isMultipleChoice.value}")
         android.util.Log.d("QuizViewModel", "  wordViewModel.quizMode.value = ${wordViewModel.quizMode.value}")
@@ -734,7 +765,7 @@ class QuizViewModel @Inject constructor(
     fun startDailyWordQuiz(checkedDays: Set<Int>) {
         if (checkedDays.isEmpty()) return
 
-        quizType.value = "daily_word"
+        _quizType.value = QuizType.DAILY_WORD
         quizMode.value = "meaning"
         isMultipleChoice.value = false
 
@@ -759,7 +790,7 @@ class QuizViewModel @Inject constructor(
     fun startWeakDailyWordQuiz(weakWordIds: Set<Int>) {
         if (weakWordIds.isEmpty()) return
 
-        quizType.value = "daily_word"
+        _quizType.value = QuizType.DAILY_WORD
         quizMode.value = "meaning"
         isMultipleChoice.value = false
 
@@ -782,7 +813,7 @@ class QuizViewModel @Inject constructor(
     fun startRandomQuiz(words: List<DailyWord>) {
         if (words.isEmpty()) return
 
-        quizType.value = "daily_word"
+        _quizType.value = QuizType.DAILY_WORD
         quizMode.value = "meaning"
         isMultipleChoice.value = false
 
@@ -799,7 +830,7 @@ class QuizViewModel @Inject constructor(
     fun startDailyWordListeningQuiz(checkedDays: Set<Int>) {
         if (checkedDays.isEmpty()) return
 
-        quizType.value = "daily_word_listening"
+        _quizType.value = QuizType.DAILY_WORD_LISTENING
         quizMode.value = "listening"
         isMultipleChoice.value = false
 
@@ -824,7 +855,7 @@ class QuizViewModel @Inject constructor(
     fun startWeakDailyWordListeningQuiz(weakWordIds: Set<Int>) {
         if (weakWordIds.isEmpty()) return
 
-        quizType.value = "daily_word_listening"
+        _quizType.value = QuizType.DAILY_WORD_LISTENING
         quizMode.value = "listening"
         isMultipleChoice.value = false
 
