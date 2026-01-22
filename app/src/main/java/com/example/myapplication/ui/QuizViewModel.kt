@@ -442,10 +442,6 @@ class QuizViewModel @Inject constructor(
     fun getSentencesByBatchId(batchId: String): List<Sentence> =
         sentenceRepository.getSentencesByBatchId(batchId)
 
-    @Deprecated("Use getSentencesByBatchId instead")
-    fun getSentencesByIdRange(startId: Int, endId: Int): List<Sentence> =
-        sentenceRepository.getSentences().filter { it.id in startId..endId }
-
     fun getAllWeakWords(): List<Any> {
         val weakWordIds = weakWords.value.orEmpty()
         val result = mutableListOf<Any>()
