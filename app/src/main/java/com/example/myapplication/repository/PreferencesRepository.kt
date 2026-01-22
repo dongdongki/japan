@@ -24,13 +24,22 @@ class PreferencesRepository(context: Context) {
     private val mainHandler = Handler(Looper.getMainLooper())
     private val repositoryScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
+    // Daily Word weak words용 SharedPreferences (별도 파일)
+    private val dailyWordPrefs: SharedPreferences =
+        context.getSharedPreferences(DAILY_WORD_PREFS_NAME, Context.MODE_PRIVATE)
+
     // LiveData for observing weak words changes
     private val _weakWordsLiveData = MutableLiveData<Set<Int>>()
     val weakWordsLiveData: LiveData<Set<Int>> = _weakWordsLiveData
 
+    // LiveData for observing daily word weak words changes
+    private val _weakDailyWordsLiveData = MutableLiveData<Set<Int>>()
+    val weakDailyWordsLiveData: LiveData<Set<Int>> = _weakDailyWordsLiveData
+
     init {
         // Initialize LiveData with current weak words
         _weakWordsLiveData.value = getWeakWords()
+        _weakDailyWordsLiveData.value = getWeakDailyWords()
     }
 
     companion object {
@@ -41,6 +50,10 @@ class PreferencesRepository(context: Context) {
         private const val KEY_SHOW_MEANING = "show_meaning"
         private const val DEFAULT_PEN_WIDTH = 12f
         private const val DEFAULT_ERASER_WIDTH = 40f
+
+        // Daily Word용 상수
+        private const val DAILY_WORD_PREFS_NAME = "daily_word_prefs"
+        private const val KEY_WEAK_DAILY_WORDS = "weak_daily_words"
     }
 
     /**
@@ -197,5 +210,76 @@ class PreferencesRepository(context: Context) {
                 .putBoolean(KEY_SHOW_MEANING, show)
                 .apply()
         }
+    }
+
+    // ==================== Daily Word Weak Words ====================
+
+    /**
+     * Get weak daily words (daily word IDs that user marked as weak)
+     */
+    fun getWeakDailyWords(): Set<Int> {
+        val stringSet = dailyWordPrefs.getStringSet(KEY_WEAK_DAILY_WORDS, emptySet()) ?: emptySet()
+        return stringSet.mapNotNull { it.toIntOrNull() }.toSet()
+    }
+
+    /**
+     * Save weak daily words
+     */
+    fun saveWeakDailyWords(wordIds: Set<Int>) {
+        with(dailyWordPrefs.edit()) {
+            val stringSet = wordIds.map { it.toString() }.toSet()
+            putStringSet(KEY_WEAK_DAILY_WORDS, stringSet)
+            apply()
+        }
+
+        // Update LiveData on main thread
+        mainHandler.post {
+            _weakDailyWordsLiveData.value = wordIds
+        }
+    }
+
+    /**
+     * Add a daily word to weak words
+     */
+    fun addWeakDailyWord(wordId: Int) {
+        val currentWeakWords = getWeakDailyWords().toMutableSet()
+        currentWeakWords.add(wordId)
+        saveWeakDailyWords(currentWeakWords)
+    }
+
+    /**
+     * Remove a daily word from weak words
+     */
+    fun removeWeakDailyWord(wordId: Int) {
+        val currentWeakWords = getWeakDailyWords().toMutableSet()
+        currentWeakWords.remove(wordId)
+        saveWeakDailyWords(currentWeakWords)
+    }
+
+    /**
+     * Toggle weak daily word status
+     */
+    fun toggleWeakDailyWord(wordId: Int) {
+        val currentWeakWords = getWeakDailyWords().toMutableSet()
+        if (currentWeakWords.contains(wordId)) {
+            currentWeakWords.remove(wordId)
+        } else {
+            currentWeakWords.add(wordId)
+        }
+        saveWeakDailyWords(currentWeakWords)
+    }
+
+    /**
+     * Check if a daily word is marked as weak
+     */
+    fun isWeakDailyWord(wordId: Int): Boolean {
+        return getWeakDailyWords().contains(wordId)
+    }
+
+    /**
+     * Clear all weak daily words
+     */
+    fun clearAllWeakDailyWords() {
+        saveWeakDailyWords(emptySet())
     }
 }

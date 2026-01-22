@@ -41,6 +41,7 @@ class QuizViewModel @Inject constructor(
     private var wordData: List<Word>? = null
     val weakWords = MutableLiveData<Set<Int>>(emptySet())
     val weakSentences = MutableLiveData<Set<Int>>(emptySet())
+    val weakDailyWords = MutableLiveData<Set<Int>>(emptySet())
     val showMeaning = MutableLiveData(true)
     val penWidth = MutableLiveData(12f)
     val eraserWidth = MutableLiveData(40f)
@@ -86,14 +87,23 @@ class QuizViewModel @Inject constructor(
         }
     }
 
+    // Observer for weak daily words changes
+    private val weakDailyWordsObserver = androidx.lifecycle.Observer<Set<Int>> { syncedWeakDailyWords ->
+        syncedWeakDailyWords?.let {
+            weakDailyWords.postValue(it)
+        }
+    }
+
     init {
         loadAllData()
         loadWeakWords()
+        loadWeakDailyWords()
         loadPenWidth()
         loadEraserWidth()
 
         // Observe weak words changes from preferences
         preferencesRepository.weakWordsLiveData.observeForever(weakWordsObserver)
+        preferencesRepository.weakDailyWordsLiveData.observeForever(weakDailyWordsObserver)
     }
 
     fun getGroupedKanaList(): Map<String, List<KanaCharacter>> {
@@ -120,8 +130,11 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun loadWeakWords() {
-        val stringSet = sharedPrefs.getStringSet("weak_words", emptySet()) ?: emptySet()
-        weakWords.value = stringSet.mapNotNull { it.toIntOrNull() }.toSet()
+        weakWords.value = preferencesRepository.getWeakWords()
+    }
+
+    private fun loadWeakDailyWords() {
+        weakDailyWords.value = preferencesRepository.getWeakDailyWords()
     }
 
     fun toggleWeakWord(word: Word) {
@@ -147,8 +160,38 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun saveWeakWords() {
-        val stringSet = weakWords.value.orEmpty().map { it.toString() }.toSet()
-        sharedPrefs.edit().putStringSet("weak_words", stringSet).apply()
+        preferencesRepository.saveWeakWords(weakWords.value.orEmpty())
+    }
+
+    // ==================== Daily Word Weak Words (via Repository) ====================
+
+    fun isWeakDailyWord(wordId: Int): Boolean {
+        return weakDailyWords.value?.contains(wordId) ?: false
+    }
+
+    fun toggleWeakDailyWord(wordId: Int) {
+        val currentWeakDailyWords = weakDailyWords.value.orEmpty().toMutableSet()
+        if (currentWeakDailyWords.contains(wordId)) {
+            currentWeakDailyWords.remove(wordId)
+        } else {
+            currentWeakDailyWords.add(wordId)
+        }
+        weakDailyWords.value = currentWeakDailyWords
+        preferencesRepository.saveWeakDailyWords(currentWeakDailyWords)
+    }
+
+    fun addWeakDailyWord(wordId: Int) {
+        val currentWeakDailyWords = weakDailyWords.value.orEmpty().toMutableSet()
+        currentWeakDailyWords.add(wordId)
+        weakDailyWords.value = currentWeakDailyWords
+        preferencesRepository.saveWeakDailyWords(currentWeakDailyWords)
+    }
+
+    fun removeWeakDailyWord(wordId: Int) {
+        val currentWeakDailyWords = weakDailyWords.value.orEmpty().toMutableSet()
+        currentWeakDailyWords.remove(wordId)
+        weakDailyWords.value = currentWeakDailyWords
+        preferencesRepository.saveWeakDailyWords(currentWeakDailyWords)
     }
 
     fun isWeakWord(word: Word): Boolean {
@@ -813,8 +856,9 @@ class QuizViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        // Remove observer to prevent memory leak
+        // Remove observers to prevent memory leak
         preferencesRepository.weakWordsLiveData.removeObserver(weakWordsObserver)
+        preferencesRepository.weakDailyWordsLiveData.removeObserver(weakDailyWordsObserver)
         // TTS is now managed by Application singleton, no cleanup needed here
     }
 }

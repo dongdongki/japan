@@ -1,6 +1,5 @@
 package com.example.myapplication.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +22,6 @@ class QuizFragment : Fragment() {
     private var _binding: FragmentQuizBinding? = null
     private val binding get() = _binding!!
     private val viewModel: QuizViewModel by activityViewModels()
-    private val weakWords = mutableSetOf<Int>()
 
     private lateinit var uiHelper: QuizUiHelper
 
@@ -40,24 +38,11 @@ class QuizFragment : Fragment() {
 
         uiHelper = QuizUiHelper(binding, viewModel, viewLifecycleOwner)
 
-        loadWeakWords()
         observeViewModel()
         setupListeners()
         if (viewModel.currentProblem.value == null) {
              viewModel.nextProblem()
         }
-    }
-
-    private fun loadWeakWords() {
-        val prefs = requireContext().getSharedPreferences(DailyWordDaySelectionFragment.PREFS_NAME, Context.MODE_PRIVATE)
-        val savedWeakWords = prefs.getStringSet(DailyWordDaySelectionFragment.KEY_WEAK_WORDS, emptySet()) ?: emptySet()
-        weakWords.clear()
-        weakWords.addAll(savedWeakWords.map { it.toInt() })
-    }
-
-    private fun saveWeakWords() {
-        val prefs = requireContext().getSharedPreferences(DailyWordDaySelectionFragment.PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putStringSet(DailyWordDaySelectionFragment.KEY_WEAK_WORDS, weakWords.map { it.toString() }.toSet()).apply()
     }
 
     private fun observeViewModel() {
@@ -230,14 +215,13 @@ class QuizFragment : Fragment() {
     private fun setupWeakWordCheckbox(problem: DailyWord) {
         binding.cbWeak.visibility = View.VISIBLE
         binding.cbWeak.setOnCheckedChangeListener(null)
-        binding.cbWeak.isChecked = weakWords.contains(problem.id)
+        binding.cbWeak.isChecked = viewModel.isWeakDailyWord(problem.id)
         binding.cbWeak.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                weakWords.add(problem.id)
+                viewModel.addWeakDailyWord(problem.id)
             } else {
-                weakWords.remove(problem.id)
+                viewModel.removeWeakDailyWord(problem.id)
             }
-            saveWeakWords()
         }
     }
 
