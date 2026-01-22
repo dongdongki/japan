@@ -7,6 +7,8 @@ import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.example.myapplication.R
 import java.io.IOException
 
 /**
@@ -100,7 +102,7 @@ class SongMediaPlayerHelper(
 
             // 현재 재생 중인 가사 하이라이트
             currentLyricIndex = index
-            lyricView.setBackgroundColor(Color.parseColor("#33FFFFFF"))
+            lyricView.setBackgroundColor(ContextCompat.getColor(context, R.color.lyric_highlight_background))
 
             mediaPlayer?.apply {
                 if (isPlaying) {

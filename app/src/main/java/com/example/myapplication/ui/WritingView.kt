@@ -11,6 +11,8 @@ import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.example.myapplication.R
 import com.example.myapplication.util.Constants
 
 class WritingView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
@@ -28,7 +30,7 @@ class WritingView(context: Context, attrs: AttributeSet?) : View(context, attrs)
     private var currentToolType = ToolType.PEN
 
     private val penPaint = Paint().apply {
-        color = Color.WHITE
+        color = ContextCompat.getColor(context, R.color.writing_stroke_color)
         isAntiAlias = true
         strokeWidth = Constants.DEFAULT_PEN_WIDTH
         style = Paint.Style.STROKE
