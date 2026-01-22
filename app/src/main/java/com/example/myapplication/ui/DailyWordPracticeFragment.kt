@@ -1,6 +1,5 @@
 package com.example.myapplication.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,9 @@ import com.example.myapplication.JapaneseStudyApp
 import com.example.myapplication.databinding.FragmentDailyWordPracticeBinding
 import com.example.myapplication.model.DailyWord
 import com.example.myapplication.repository.DailyWordRepository
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DailyWordPracticeFragment : Fragment() {
 
     private var _binding: FragmentDailyWordPracticeBinding? = null
@@ -26,7 +27,6 @@ class DailyWordPracticeFragment : Fragment() {
     private var isTextHidden = false
     private var isReadingHidden = false
     private var isMeaningHidden = false
-    private val weakWords = mutableSetOf<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +41,6 @@ class DailyWordPracticeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         repository = DailyWordRepository(requireContext())
-        loadWeakWords()
 
         // Get arguments - support both day/wordIndex and wordId
         val wordId = arguments?.getInt("wordId", -1) ?: -1
@@ -49,7 +48,8 @@ class DailyWordPracticeFragment : Fragment() {
         if (wordId != -1) {
             // Coming from weak word list - show all weak words
             val allWords = repository.getAllWords()
-            wordList = allWords.filter { it.id in weakWords }
+            val weakWordIds = viewModel.weakDailyWords.value.orEmpty()
+            wordList = allWords.filter { it.id in weakWordIds }
             // Find index of clicked word
             currentIndex = wordList.indexOfFirst { it.id == wordId }.coerceAtLeast(0)
         } else {
@@ -126,24 +126,11 @@ class DailyWordPracticeFragment : Fragment() {
             if (wordList.isEmpty()) return@setOnCheckedChangeListener
             val wordId = wordList[currentIndex].id
             if (isChecked) {
-                weakWords.add(wordId)
+                viewModel.addWeakDailyWord(wordId)
             } else {
-                weakWords.remove(wordId)
+                viewModel.removeWeakDailyWord(wordId)
             }
-            saveWeakWords()
         }
-    }
-
-    private fun loadWeakWords() {
-        val prefs = requireContext().getSharedPreferences(DailyWordDaySelectionFragment.PREFS_NAME, Context.MODE_PRIVATE)
-        val savedWeakWords = prefs.getStringSet(DailyWordDaySelectionFragment.KEY_WEAK_WORDS, emptySet()) ?: emptySet()
-        weakWords.clear()
-        weakWords.addAll(savedWeakWords.map { it.toInt() })
-    }
-
-    private fun saveWeakWords() {
-        val prefs = requireContext().getSharedPreferences(DailyWordDaySelectionFragment.PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putStringSet(DailyWordDaySelectionFragment.KEY_WEAK_WORDS, weakWords.map { it.toString() }.toSet()).apply()
     }
 
     private fun displayCurrentWord() {
@@ -161,15 +148,14 @@ class DailyWordPracticeFragment : Fragment() {
 
         // Update weak checkbox
         binding.cbWeak.setOnCheckedChangeListener(null)
-        binding.cbWeak.isChecked = weakWords.contains(word.id)
+        binding.cbWeak.isChecked = viewModel.isWeakDailyWord(word.id)
         binding.cbWeak.setOnCheckedChangeListener { _, isChecked ->
             val wordId = wordList[currentIndex].id
             if (isChecked) {
-                weakWords.add(wordId)
+                viewModel.addWeakDailyWord(wordId)
             } else {
-                weakWords.remove(wordId)
+                viewModel.removeWeakDailyWord(wordId)
             }
-            saveWeakWords()
         }
 
         // Buttons always enabled for circular navigation

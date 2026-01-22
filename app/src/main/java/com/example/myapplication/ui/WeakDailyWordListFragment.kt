@@ -1,6 +1,5 @@
 package com.example.myapplication.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,13 +17,15 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentWeakDailyWordListBinding
 import com.example.myapplication.model.DailyWord
 import com.example.myapplication.repository.DailyWordRepository
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WeakDailyWordListFragment : Fragment() {
 
     private var _binding: FragmentWeakDailyWordListBinding? = null
     private val binding get() = _binding!!
     private lateinit var repository: DailyWordRepository
-    private val weakWordIds = mutableSetOf<Int>()
+    private val viewModel: QuizViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,9 +40,18 @@ class WeakDailyWordListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         repository = DailyWordRepository(requireContext())
-        loadWeakWords()
 
+        setupList()
+
+        // Observe weak daily words changes to refresh list
+        viewModel.weakDailyWords.observe(viewLifecycleOwner) {
+            refreshList()
+        }
+    }
+
+    private fun setupList() {
         val allWords = repository.getAllWords()
+        val weakWordIds = viewModel.weakDailyWords.value.orEmpty()
         val weakWords = allWords.filter { it.id in weakWordIds }
 
         binding.tvCount.text = "총 ${weakWords.size}개"
@@ -59,14 +70,9 @@ class WeakDailyWordListFragment : Fragment() {
             },
             onWeakCheckChanged = { wordId, isChecked ->
                 if (isChecked) {
-                    weakWordIds.add(wordId)
+                    viewModel.addWeakDailyWord(wordId)
                 } else {
-                    weakWordIds.remove(wordId)
-                }
-                saveWeakWords()
-                // Refresh list when unchecked
-                if (!isChecked) {
-                    refreshList()
+                    viewModel.removeWeakDailyWord(wordId)
                 }
             }
         )
@@ -74,6 +80,7 @@ class WeakDailyWordListFragment : Fragment() {
 
     private fun refreshList() {
         val allWords = repository.getAllWords()
+        val weakWordIds = viewModel.weakDailyWords.value.orEmpty()
         val weakWords = allWords.filter { it.id in weakWordIds }
         binding.tvCount.text = "총 ${weakWords.size}개"
 
@@ -90,28 +97,12 @@ class WeakDailyWordListFragment : Fragment() {
             },
             onWeakCheckChanged = { wordId, isChecked ->
                 if (isChecked) {
-                    weakWordIds.add(wordId)
+                    viewModel.addWeakDailyWord(wordId)
                 } else {
-                    weakWordIds.remove(wordId)
-                }
-                saveWeakWords()
-                if (!isChecked) {
-                    refreshList()
+                    viewModel.removeWeakDailyWord(wordId)
                 }
             }
         )
-    }
-
-    private fun loadWeakWords() {
-        val prefs = requireContext().getSharedPreferences(DailyWordDaySelectionFragment.PREFS_NAME, Context.MODE_PRIVATE)
-        val savedWeakWords = prefs.getStringSet(DailyWordDaySelectionFragment.KEY_WEAK_WORDS, emptySet()) ?: emptySet()
-        weakWordIds.clear()
-        weakWordIds.addAll(savedWeakWords.map { it.toInt() })
-    }
-
-    private fun saveWeakWords() {
-        val prefs = requireContext().getSharedPreferences(DailyWordDaySelectionFragment.PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putStringSet(DailyWordDaySelectionFragment.KEY_WEAK_WORDS, weakWordIds.map { it.toString() }.toSet()).apply()
     }
 
     private fun speak(text: String) {
