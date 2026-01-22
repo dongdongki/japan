@@ -232,6 +232,9 @@ class SongMediaPlayerHelper(
     }
 
     companion object {
+        // Precompiled regex for timestamp validation (avoids recompilation on each call)
+        private val TIMESTAMP_PATTERN = Regex("^\\d{1,2}:\\d{2}(\\.\\d)?$")
+
         /**
          * 타임스탬프 형식으로 변환
          */
@@ -245,8 +248,7 @@ class SongMediaPlayerHelper(
          * 타임스탬프 유효성 검사
          */
         fun isValidTimestamp(timestamp: String): Boolean {
-            val pattern = Regex("^\\d{1,2}:\\d{2}(\\.\\d)?$")
-            return pattern.matches(timestamp)
+            return TIMESTAMP_PATTERN.matches(timestamp)
         }
 
         /**
