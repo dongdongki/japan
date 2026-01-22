@@ -11,6 +11,7 @@ import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.example.myapplication.util.Constants
 
 class WritingView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
@@ -29,7 +30,7 @@ class WritingView(context: Context, attrs: AttributeSet?) : View(context, attrs)
     private val penPaint = Paint().apply {
         color = Color.WHITE
         isAntiAlias = true
-        strokeWidth = 12f
+        strokeWidth = Constants.DEFAULT_PEN_WIDTH
         style = Paint.Style.STROKE
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
@@ -37,7 +38,7 @@ class WritingView(context: Context, attrs: AttributeSet?) : View(context, attrs)
 
     private val eraserPaint = Paint().apply {
         isAntiAlias = true
-        strokeWidth = 40f
+        strokeWidth = Constants.DEFAULT_ERASER_WIDTH
         style = Paint.Style.STROKE
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND

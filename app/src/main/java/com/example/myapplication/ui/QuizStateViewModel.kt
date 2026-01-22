@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.model.Word
 import com.example.myapplication.repository.PreferencesRepository
 import com.example.myapplication.service.TtsService
+import com.example.myapplication.util.Constants
 
 /**
  * Helper class for managing quiz state and common functionality
@@ -25,8 +26,8 @@ class QuizStateViewModel(
     val weakWords = MutableLiveData<Set<Int>>(emptySet())
 
     // Drawing tools
-    val penWidth = MutableLiveData(12f)
-    val eraserWidth = MutableLiveData(40f)
+    val penWidth = MutableLiveData(Constants.DEFAULT_PEN_WIDTH)
+    val eraserWidth = MutableLiveData(Constants.DEFAULT_ERASER_WIDTH)
 
     // Internal quiz list
     private var currentQuizList: MutableList<Any> = mutableListOf()

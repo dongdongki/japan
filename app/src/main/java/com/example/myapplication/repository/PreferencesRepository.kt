@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.myapplication.util.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -48,8 +49,6 @@ class PreferencesRepository(context: Context) {
         private const val KEY_PEN_WIDTH = "pen_width"
         private const val KEY_ERASER_WIDTH = "eraser_width"
         private const val KEY_SHOW_MEANING = "show_meaning"
-        private const val DEFAULT_PEN_WIDTH = 12f
-        private const val DEFAULT_ERASER_WIDTH = 40f
 
         // Daily Word용 상수
         private const val DAILY_WORD_PREFS_NAME = "daily_word_prefs"
@@ -144,7 +143,7 @@ class PreferencesRepository(context: Context) {
      * Get pen width setting
      */
     fun getPenWidth(): Float {
-        return sharedPrefs.getFloat(KEY_PEN_WIDTH, DEFAULT_PEN_WIDTH)
+        return sharedPrefs.getFloat(KEY_PEN_WIDTH, Constants.DEFAULT_PEN_WIDTH)
     }
 
     /**
@@ -162,7 +161,7 @@ class PreferencesRepository(context: Context) {
      * Get eraser width setting
      */
     fun getEraserWidth(): Float {
-        return sharedPrefs.getFloat(KEY_ERASER_WIDTH, DEFAULT_ERASER_WIDTH)
+        return sharedPrefs.getFloat(KEY_ERASER_WIDTH, Constants.DEFAULT_ERASER_WIDTH)
     }
 
     /**
