@@ -147,7 +147,9 @@ class SongMediaPlayerHelper(
                         }
                     }
 
-                    playbackHandler?.postDelayed(stopPlaybackRunnable!!, 100)
+                    stopPlaybackRunnable?.let { runnable ->
+                        playbackHandler?.postDelayed(runnable, 100)
+                    }
 
                     android.util.Log.d(
                         "SongMediaPlayerHelper",

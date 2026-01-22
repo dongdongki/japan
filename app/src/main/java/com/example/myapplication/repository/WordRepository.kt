@@ -161,7 +161,7 @@ class WordRepository(private val context: Context) {
     fun getAllWords(): List<Word> {
         return cachedAllWords ?: run {
             buildCaches()
-            cachedAllWords!!
+            cachedAllWords ?: emptyList()
         }
     }
 

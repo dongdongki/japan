@@ -236,8 +236,8 @@ class SentenceGeneratorRepository(private val context: Context) {
             request = request
         )
 
-        if (response.isSuccessful && response.body() != null) {
-            val responseBody = response.body()!!
+        val responseBody = response.body()
+        if (response.isSuccessful && responseBody != null) {
             val content = responseBody.choices.firstOrNull()?.message?.content
 
             if (content != null && content.isNotEmpty()) {
@@ -450,11 +450,11 @@ ${providedWords.joinToString(", ") { "${it.word}(${it.reading})" }}
                 request = request
             )
 
-            if (response.isSuccessful && response.body() != null) {
-                val content = response.body()!!.choices.firstOrNull()?.message?.content
+            val responseBody = response.body()
+            if (response.isSuccessful && responseBody != null) {
+                val content = responseBody.choices.firstOrNull()?.message?.content
                 if (content != null) {
                     // Cost calculation
-                    val responseBody = response.body()!!
                     val inputCost = responseBody.usage.promptTokens * 0.150 / 1_000_000
                     val outputCost = responseBody.usage.completionTokens * 0.600 / 1_000_000
                     updateUsageStats(responseBody.usage.totalTokens, inputCost + outputCost)
@@ -562,11 +562,11 @@ $wordListForGrouping
                 request = request
             )
 
-            if (response.isSuccessful && response.body() != null) {
-                val content = response.body()!!.choices.firstOrNull()?.message?.content
+            val responseBody = response.body()
+            if (response.isSuccessful && responseBody != null) {
+                val content = responseBody.choices.firstOrNull()?.message?.content
                 if (content != null) {
                     // Cost calculation
-                    val responseBody = response.body()!!
                     val inputCost = responseBody.usage.promptTokens * 0.150 / 1_000_000
                     val outputCost = responseBody.usage.completionTokens * 0.600 / 1_000_000
                     updateUsageStats(responseBody.usage.totalTokens, inputCost + outputCost)
