@@ -133,16 +133,17 @@ const Quiz = {
     input.focus();
 
     input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') this._checkAnswer();
+      if (e.key !== 'Enter') return;
+      const nextBtn = document.querySelector('.btn-next');
+      if (nextBtn) {
+        this._next();
+      } else {
+        this._checkAnswer();
+      }
     });
   },
 
   _checkAnswer() {
-    if (this.state.answered) {
-      this._next();
-      return;
-    }
-
     const input = document.getElementById('quiz-answer');
     const feedback = document.getElementById('quiz-feedback');
     const userAnswer = input.value.trim();
@@ -151,24 +152,24 @@ const Quiz = {
 
     if (!userAnswer) return;
 
-    this.state.answered = true;
-
     if (userAnswer === correctAnswer) {
       this.state.correct++;
-      input.classList.add('correct');
-      feedback.className = 'quiz-feedback correct';
-      feedback.textContent = '정답!';
+      this._next();
     } else {
       this.state.wrongList.push(q);
       input.classList.add('incorrect');
+      input.readOnly = true;
       feedback.className = 'quiz-feedback incorrect';
-      feedback.innerHTML = `오답! <span class="correct-answer">정답: ${q.kor} (${q.romaji})</span>`;
+      feedback.innerHTML = `오답! 정답: <strong>${q.kor}</strong> (${q.romaji})`;
+
+      const btnArea = document.querySelector('.quiz-input-area');
+      const btn = document.createElement('button');
+      btn.className = 'btn-next';
+      btn.textContent = '다음';
+      btn.addEventListener('click', () => this._next());
+      btnArea.appendChild(btn);
+      btn.focus();
     }
-
-    input.readOnly = true;
-
-    // Enter로 다음 문제 진행 가능하도록 안내 대신 바로 포커스 유지
-    setTimeout(() => input.focus(), 10);
   },
 
   _next() {
