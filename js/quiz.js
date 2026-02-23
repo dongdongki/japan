@@ -133,7 +133,8 @@ const Quiz = {
     input.focus();
 
     input.addEventListener('keydown', (e) => {
-      if (e.key !== 'Enter') return;
+      if (e.key !== 'Enter' || e.isComposing) return;
+      e.preventDefault();
       const nextBtn = document.querySelector('.btn-next');
       if (nextBtn) {
         this._next();
@@ -168,7 +169,6 @@ const Quiz = {
       btn.textContent = '다음';
       btn.addEventListener('click', () => this._next());
       btnArea.appendChild(btn);
-      btn.focus();
     }
   },
 
