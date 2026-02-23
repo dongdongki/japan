@@ -124,7 +124,7 @@ const Quiz = {
         <div class="quiz-question">${q.kana}</div>
 
         <div class="quiz-input-area">
-          <input type="text" class="quiz-input" id="quiz-answer" placeholder="로마자 입력" autocomplete="off" autofocus>
+          <input type="text" class="quiz-input" id="quiz-answer" placeholder="한글 발음 입력" autocomplete="off" autofocus>
           <div class="quiz-feedback" id="quiz-feedback"></div>
         </div>
       </div>`;
@@ -145,9 +145,9 @@ const Quiz = {
 
     const input = document.getElementById('quiz-answer');
     const feedback = document.getElementById('quiz-feedback');
-    const userAnswer = input.value.trim().toLowerCase();
+    const userAnswer = input.value.trim();
     const q = this.state.questions[this.state.current];
-    const correctAnswer = q.romaji.toLowerCase();
+    const correctAnswer = q.kor;
 
     if (!userAnswer) return;
 
@@ -162,7 +162,7 @@ const Quiz = {
       this.state.wrongList.push(q);
       input.classList.add('incorrect');
       feedback.className = 'quiz-feedback incorrect';
-      feedback.innerHTML = `오답! <span class="correct-answer">정답: ${q.romaji} (${q.kor})</span>`;
+      feedback.innerHTML = `오답! <span class="correct-answer">정답: ${q.kor} (${q.romaji})</span>`;
     }
 
     input.readOnly = true;
