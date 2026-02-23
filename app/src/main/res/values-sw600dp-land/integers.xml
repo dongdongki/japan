@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Tablet landscape: 5 columns -->
-    <integer name="word_list_span_count">5</integer>
-</resources>

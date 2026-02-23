@@ -1,0 +1,489 @@
+/* ── 다크 모드 기본 테마 ── */
+:root {
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #1a1a2e;
+  --bg-card: #16213e;
+  --bg-card-hover: #1a2744;
+  --bg-input: #0f1729;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b8;
+  --accent: #4a6cf7;
+  --accent-hover: #3b5de7;
+  --correct: #2ecc71;
+  --incorrect: #e74c3c;
+  --border: #2a2a4a;
+  --radius: 12px;
+}
+
+/* ── 리셋 ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* ── 네비게이션 ── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+.nav-link.active {
+  color: var(--text-primary);
+  background: var(--accent);
+}
+
+/* ── 메인 ── */
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* ── 홈 페이지 ── */
+.home {
+  text-align: center;
+  padding-top: 60px;
+}
+
+.home h1 {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+.home p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.home-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: block;
+  padding: 16px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-size: 18px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+
+.home-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent);
+}
+
+/* ── 문자표 ── */
+.kana-page h2 {
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+.row-group {
+  margin-bottom: 28px;
+}
+
+.row-title {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.kana-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.kana-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 60%;
+}
+
+.kana-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 8px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.kana-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.kana-char {
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.kana-romaji {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.kana-kor {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ── 퀴즈 설정 ── */
+.quiz-setup h2 {
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+.setup-section {
+  margin-bottom: 24px;
+}
+
+.setup-section h3 {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.radio-btn {
+  display: none;
+}
+
+.radio-label {
+  padding: 10px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.radio-btn:checked + .radio-label {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.row-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.row-checkbox {
+  display: none;
+}
+
+.row-check-label {
+  padding: 8px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.row-checkbox:checked + .row-check-label {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-start {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 12px;
+}
+
+.btn-start:hover {
+  background: var(--accent-hover);
+}
+
+.btn-start:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── 퀴즈 진행 ── */
+.quiz-play {
+  text-align: center;
+}
+
+.quiz-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--bg-card);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.quiz-question {
+  font-size: 80px;
+  font-weight: 300;
+  margin: 32px 0;
+  line-height: 1;
+}
+
+.quiz-input-area {
+  margin-bottom: 24px;
+}
+
+.quiz-input {
+  width: 100%;
+  max-width: 280px;
+  padding: 14px;
+  background: var(--bg-input);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 22px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.quiz-input:focus {
+  border-color: var(--accent);
+}
+
+.quiz-input.correct {
+  border-color: var(--correct);
+}
+
+.quiz-input.incorrect {
+  border-color: var(--incorrect);
+}
+
+.quiz-feedback {
+  min-height: 28px;
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.quiz-feedback.correct {
+  color: var(--correct);
+}
+
+.quiz-feedback.incorrect {
+  color: var(--incorrect);
+}
+
+.correct-answer {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.btn-next {
+  padding: 12px 32px;
+  background: var(--accent);
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 16px;
+}
+
+.btn-next:hover {
+  background: var(--accent-hover);
+}
+
+/* ── 퀴즈 결과 ── */
+.quiz-result {
+  text-align: center;
+}
+
+.quiz-result h2 {
+  font-size: 28px;
+  margin-bottom: 28px;
+}
+
+.result-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.stat-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 12px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.wrong-list {
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.wrong-list h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: var(--incorrect);
+}
+
+.wrong-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.wrong-item .char {
+  font-size: 24px;
+  min-width: 36px;
+}
+
+.result-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-retry, .btn-home {
+  padding: 12px 28px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-retry {
+  background: var(--accent);
+  color: var(--text-primary);
+}
+
+.btn-retry:hover {
+  background: var(--accent-hover);
+}
+
+.btn-home {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn-home:hover {
+  background: var(--bg-card-hover);
+}
+
+/* ── 반응형 ── */
+@media (max-width: 480px) {
+  .kana-card {
+    padding: 10px 4px;
+  }
+  .kana-char {
+    font-size: 24px;
+  }
+  .quiz-question {
+    font-size: 60px;
+  }
+  .result-stats {
+    grid-template-columns: 1fr;
+  }
+}

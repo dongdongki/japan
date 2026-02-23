@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Phone portrait: 3 columns for words -->
-    <integer name="word_list_span_count">3</integer>
-    <!-- Phone portrait: 1 column for sentences (long text) -->
-    <integer name="sentence_list_span_count">1</integer>
-</resources>
